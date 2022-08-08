@@ -2,7 +2,7 @@ import Icon from "@/components/Icon";
 import React from "react";
 
 import styles from "./index.module.css";
-console.log(styles);
+// console.log(styles);
 export default function Playground() {
   return (
     <div>

@@ -1,10 +1,13 @@
 import styles from "./index.module.scss";
 import { NavBar, Form, Input, List, Button } from "antd-mobile";
 import { useHistory } from "react-router";
+import { LoginForm } from "@/types/data";
 
 export default function Login() {
   const history = useHistory();
-
+  const finishFn = (values: LoginForm) => {
+    console.log(values.code, values.mobile);
+  };
   return (
     <div className={styles.root}>
       <NavBar onBack={() => history.go(-1)}></NavBar>
@@ -12,7 +15,7 @@ export default function Login() {
       <div className="login-form">
         <h2 className="title">账号登录</h2>
 
-        <Form>
+        <Form onFinish={finishFn}>
           <Form.Item
             className="login-item"
             name="mobile"
