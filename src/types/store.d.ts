@@ -1,4 +1,4 @@
-import store from "../store";
+import store from "@/store";
 import { ThunkAction } from "redux-thunk";
 
 export type LoginAction = {
