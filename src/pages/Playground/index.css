@@ -1,0 +1,15 @@
+:root {
+  --test-color: pink;
+}
+.test-div {
+  width: 100px;
+  height: 100px;
+  /* background-color: red; */
+  margin: 5px;
+}
+.test-div:nth-child(1) {
+  background-color: var(--test-color);
+}
+.test-div:nth-child(2) {
+  border: 5px solid var(--test-color);
+}

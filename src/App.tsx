@@ -3,6 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import "./App.scss";
 import Layout from "./pages/Layout";
 import Login from "./pages/Login";
+import Playground from "./pages/Playground";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
       ></Route>
       <Route path={"/home"} component={Layout}></Route>
       <Route path={"/login"} component={Login}></Route>
+      <Route path={"/playground"} component={Playground}></Route>
     </div>
   );
 }
