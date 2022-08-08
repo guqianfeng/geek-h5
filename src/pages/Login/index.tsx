@@ -4,7 +4,7 @@ import { Button } from "antd-mobile";
 export default function Login() {
   return (
     <div>
-      <Button color="primary" fill="outline">
+      <Button color="primary" fill="solid">
         测试
       </Button>
     </div>
