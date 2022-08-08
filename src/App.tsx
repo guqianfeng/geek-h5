@@ -8,7 +8,6 @@ import Playground from "./pages/Playground";
 export default function App() {
   return (
     <div className="app">
-      <h1>我是App</h1>
       {/* <Route path="/" exact> */}
       {/* <Redirect to={"/home"}></Redirect> */}
       {/* </Route>  */}
