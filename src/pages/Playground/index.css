@@ -2,7 +2,7 @@
   --test-color: pink;
 }
 .test-div {
-  width: 100px;
+  width: calc(375px / 2);
   height: 100px;
   /* background-color: red; */
   margin: 5px;
