@@ -4,6 +4,7 @@ import { Button, List, DatePicker, NavBar, Popup } from "antd-mobile";
 import classNames from "classnames";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import EditInput from "./EditInput";
 
 import styles from "./index.module.scss";
 
@@ -116,7 +117,15 @@ const ProfileEdit = () => {
         position="right"
         bodyStyle={{ width: "100vw" }}
       >
-        {popupState.type}
+        <EditInput
+          type={popupState.type}
+          onClose={() => {
+            setPopupState({
+              visible: false,
+              type: "",
+            });
+          }}
+        />
       </Popup>
     </div>
   );
