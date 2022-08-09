@@ -1,6 +1,7 @@
 import { ApiResponse } from "@/types/data";
 import axios, { AxiosError } from "axios";
 import { Toast } from "antd-mobile";
+import { getToken } from "./token";
 
 const http = axios.create({
   baseURL: "http://geek.itheima.net/v1_0/",
@@ -10,6 +11,10 @@ const http = axios.create({
 // 添加请求拦截器
 http.interceptors.request.use(
   (config) => {
+    const token = getToken().token;
+    if (token) {
+      config.headers!.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {

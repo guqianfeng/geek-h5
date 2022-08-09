@@ -1,6 +1,6 @@
+import { User, Token } from "./data.d";
 import store from "@/store";
 import { ThunkAction } from "redux-thunk";
-import { Token } from "@/data";
 
 export type LoginAction = {
   type: "login/login";
@@ -12,7 +12,13 @@ export type SendCodeAction = {
   payload: string;
 };
 
-export type RootAction = LoginAction | SendCodeAction;
+export type ProfileAction = {
+  type: "profile/set_user";
+  payload: User;
+};
+
+// 所有 Action 汇总成的类型
+export type RootAction = LoginAction | SendCodeAction | ProfileAction;
 
 export type RootState = ReturnType<typeof store.getState>;
 

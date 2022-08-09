@@ -1,10 +1,17 @@
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory } from "react-router-dom";
 
-import Icon from '@/components/Icon'
-import styles from './index.module.scss'
+import Icon from "@/components/Icon";
+import styles from "./index.module.scss";
+import { useEffect } from "react";
+import { getProfile } from "@/store/actions/profile";
+import { useDispatch } from "react-redux";
 
 const Profile = () => {
-  const history = useHistory()
+  const history = useHistory();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProfile());
+  }, []);
 
   return (
     <div className={styles.root}>
@@ -13,7 +20,7 @@ const Profile = () => {
         <div className="user-info">
           <div className="avatar">
             <img
-              src={'http://toutiao.itheima.net/images/user_head.jpg'}
+              src={"http://toutiao.itheima.net/images/user_head.jpg"}
               alt=""
             />
           </div>
@@ -80,14 +87,14 @@ const Profile = () => {
             <Icon type="iconbtn_feedback" />
             <div>用户反馈</div>
           </div>
-          <div className="service-item" onClick={() => history.push('/chat')}>
+          <div className="service-item" onClick={() => history.push("/chat")}>
             <Icon type="iconbtn_xiaozhitongxue" />
             <div>小智同学</div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
