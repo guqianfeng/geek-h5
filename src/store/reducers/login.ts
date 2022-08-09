@@ -1,9 +1,7 @@
 import { Token } from "@/types/data.d";
 import { RootAction } from "@/types/store";
-const initialState: Token = {
-  token: "",
-  refresh_token: "",
-};
+import { getToken } from "@/utils/token";
+const initialState: Token = getToken();
 function loginReducer(state = initialState, action: RootAction) {
   if (action.type === "login/login") {
     return action.payload;
