@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Icon from "@/components/Icon";
 import styles from "./index.module.scss";
 import { useEffect } from "react";
-import { getProfile } from "@/store/actions/profile";
+import { getUser } from "@/store/actions/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/types/store";
 import { User } from "@/types/data";
@@ -13,9 +13,8 @@ const Profile = () => {
   const dispatch = useDispatch();
   const profile = useSelector<RootState, User>((state) => state.profile.user);
   useEffect(() => {
-    dispatch(getProfile());
+    dispatch(getUser());
   }, [dispatch]);
-
   return (
     <div className={styles.root}>
       <div className="profile">
