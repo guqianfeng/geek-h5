@@ -1,25 +1,25 @@
 import { getProfile } from "@/store/actions/profile";
-import { Profile } from "@/types/data";
-import { RootState } from "@/types/store";
+import { usePageEnter } from "@/utils/hooks";
 import { Button, List, DatePicker, NavBar } from "antd-mobile";
 import classNames from "classnames";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import styles from "./index.module.scss";
 
 const Item = List.Item;
 
 const ProfileEdit = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    // 发送请求
-    // console.log("发送请求");
-    dispatch(getProfile());
-  }, [dispatch]);
-  const profile = useSelector<RootState, Profile>(
-    (state) => state.profile.profile
-  );
+  // const dispatch = useDispatch();
+  // const profile = useSelector<RootState, Profile>(
+  //   (state) => state.profile.profile
+  // );
+  // useEffect(() => {
+  //   // 发送请求
+  //   // console.log("发送请求");
+  //   dispatch(getProfile());
+  // }, [dispatch]);
+  const history = useHistory();
+  const profile = usePageEnter(getProfile).profile.profile;
   return (
     <div className={styles.root}>
       <div className="content">
@@ -27,6 +27,9 @@ const ProfileEdit = () => {
         <NavBar
           style={{
             "--border-bottom": "1px solid #F0F0F0",
+          }}
+          onBack={() => {
+            history.go(-1);
           }}
         >
           个人信息

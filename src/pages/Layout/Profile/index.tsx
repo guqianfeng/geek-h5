@@ -2,28 +2,26 @@ import { Link, useHistory } from "react-router-dom";
 
 import Icon from "@/components/Icon";
 import styles from "./index.module.scss";
-import { useEffect } from "react";
 import { getUser } from "@/store/actions/profile";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/types/store";
-import { User } from "@/types/data";
+import { usePageEnter } from "@/utils/hooks";
 
 const Profile = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
-  const profile = useSelector<RootState, User>((state) => state.profile.user);
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
+  // const dispatch = useDispatch();
+  // const user = useSelector<RootState, User>((state) => state.profile.user);
+  // useEffect(() => {
+  //   dispatch(getUser());
+  // }, [dispatch]);
+  const user = usePageEnter(getUser).profile.user;
   return (
     <div className={styles.root}>
       <div className="profile">
         {/* 个人信息 */}
         <div className="user-info">
           <div className="avatar">
-            <img src={profile.photo} alt="" />
+            <img src={user.photo} alt="" />
           </div>
-          <div className="user-name">{profile.name}</div>
+          <div className="user-name">{user.name}</div>
           <Link to="/profile/edit">
             个人信息 <Icon type="iconbtn_right" />
           </Link>
@@ -40,19 +38,19 @@ const Profile = () => {
         {/* 动态 - 对应的这一行 */}
         <div className="count-list">
           <div className="count-item">
-            <p>{profile.art_count}</p>
+            <p>{user.art_count}</p>
             <p>动态</p>
           </div>
           <div className="count-item">
-            <p>{profile.follow_count}</p>
+            <p>{user.follow_count}</p>
             <p>关注</p>
           </div>
           <div className="count-item">
-            <p>{profile.fans_count}</p>
+            <p>{user.fans_count}</p>
             <p>粉丝</p>
           </div>
           <div className="count-item">
-            <p>{profile.like_count}</p>
+            <p>{user.like_count}</p>
             <p>被赞</p>
           </div>
         </div>
