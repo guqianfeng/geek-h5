@@ -10,19 +10,27 @@ export default function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
   const finishFn = async (values: LoginForm) => {
-    try {
-      await dispatch(login(values));
-      Toast.show({
-        content: "登录成功",
-        duration: 1000,
-        afterClose: () => {
-          history.push("/home");
-        },
-      });
-    } catch (e) {
-      const error = e as AxiosError<ApiResponse>;
-      console.log("登录出错", error.response?.data.message);
-    }
+    // try {
+    //   await dispatch(login(values));
+    //   Toast.show({
+    //     content: "登录成功",
+    //     duration: 1000,
+    //     afterClose: () => {
+    //       history.push("/home");
+    //     },
+    //   });
+    // } catch (e) {
+    //   const error = e as AxiosError<ApiResponse>;
+    //   console.log("登录出错", error.response?.data.message);
+    // }
+    await dispatch(login(values));
+    Toast.show({
+      content: "登录成功",
+      duration: 1000,
+      afterClose: () => {
+        history.push("/home");
+      },
+    });
   };
   return (
     <div className={styles.root}>
