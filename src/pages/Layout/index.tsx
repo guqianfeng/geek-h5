@@ -1,7 +1,7 @@
 import Icon from "@/components/Icon";
 import { TabBar } from "antd-mobile";
 import styles from "./index.module.scss";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import Home from "@/pages/Home";
 import Question from "@/pages/Question";
 import Video from "@/pages/Video";
@@ -17,9 +17,18 @@ const tabs = [
 
 //<Icon name={item.icon + "_sel"} className="tab-bar-item-icon" />
 const Layout = () => {
+  const history = useHistory();
+  const location = useLocation();
+  const onTabChange = (key: string) => {
+    history.push(key);
+  };
   return (
     <div className={styles.root}>
-      <TabBar className="tab-bar">
+      <TabBar
+        className="tab-bar"
+        onChange={onTabChange}
+        activeKey={location.pathname}
+      >
         {tabs.map((item) => (
           <TabBar.Item
             key={item.path}
