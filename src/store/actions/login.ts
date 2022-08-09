@@ -16,3 +16,10 @@ export const login = (values: LoginForm): RootThunkAction => {
     setToken(token);
   };
 };
+
+export function sendCode(mobile: string): RootThunkAction {
+  return async (dispatch) => {
+    // 注意：验证码会发到用户手机上，不需要保存在 redux 中（也不需要保存）
+    await request.get(`/sms/codes/${mobile}`);
+  };
+}

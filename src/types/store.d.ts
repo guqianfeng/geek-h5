@@ -7,7 +7,12 @@ export type LoginAction = {
   payload: Token;
 };
 
-export type RootAction = LoginAction;
+export type SendCodeAction = {
+  type: "login/code";
+  payload: string;
+};
+
+export type RootAction = LoginAction | SendCodeAction;
 
 export type RootState = ReturnType<typeof store.getState>;
 

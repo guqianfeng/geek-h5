@@ -3,10 +3,11 @@ import { NavBar, Toast, Form, Input, List, Button } from "antd-mobile";
 import { useHistory } from "react-router";
 import { ApiResponse, LoginForm } from "@/types/data";
 import { useDispatch } from "react-redux";
-import { login } from "@/store/actions/login";
+import { login, sendCode } from "@/store/actions/login";
 import { AxiosError } from "axios";
 import { useRef } from "react";
 import { InputRef } from "antd-mobile/es/components/input";
+import { RootAction } from "@/types/store";
 
 export default function Login() {
   const history = useHistory();
@@ -39,11 +40,12 @@ export default function Login() {
   const getCode = () => {
     const mobileValue = form.getFieldValue("mobile");
     const mobileErrors = form.getFieldError("mobile");
-    console.log({ mobileValue, mobileErrors });
+    // console.log({ mobileValue, mobileErrors });
     if (!mobileValue || mobileErrors.length > 0) {
       mobileRef.current?.nativeElement?.focus();
       return;
     }
+    dispatch(sendCode(mobileValue));
   };
   return (
     <div className={styles.root}>
