@@ -15,7 +15,6 @@ const tabs = [
   { path: "/home/profile", icon: "iconbtn_mine", text: "我的" },
 ];
 
-//<Icon name={item.icon + "_sel"} className="tab-bar-item-icon" />
 const Layout = () => {
   const history = useHistory();
   const location = useLocation();
@@ -36,7 +35,7 @@ const Layout = () => {
             icon={(active: boolean) => {
               return (
                 <Icon
-                  name={item.icon + (active ? "_sel" : "")}
+                  type={item.icon + (active ? "_sel" : "")}
                   className="tab-bar-item-icon"
                 />
               );

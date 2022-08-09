@@ -14,7 +14,7 @@ export default function Playground() {
       </svg>
       <Icon
         className="abc"
-        name="iconbtn_like_sel"
+        type="iconbtn_like_sel"
         onClick={() => {
           console.log("click");
         }}
