@@ -7,18 +7,13 @@ export type LoginAction = {
   payload: Token;
 };
 
-export type SendCodeAction = {
-  type: "login/code";
-  payload: string;
-};
-
 export type ProfileAction = {
   type: "profile/set_user";
   payload: User;
 };
 
 // 所有 Action 汇总成的类型
-export type RootAction = LoginAction | SendCodeAction | ProfileAction;
+export type RootAction = LoginAction | ProfileAction;
 
 export type RootState = ReturnType<typeof store.getState>;
 
