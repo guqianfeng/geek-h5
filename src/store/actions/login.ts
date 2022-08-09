@@ -1,4 +1,4 @@
-import { RootThunkAction } from "@/types/store.d";
+import { RootAction, RootThunkAction } from "@/types/store.d";
 import { LoginForm, ApiResponse, Token } from "@/types/data.d";
 import request from "@/utils/request";
 export const login = (values: LoginForm): RootThunkAction => {
@@ -7,6 +7,9 @@ export const login = (values: LoginForm): RootThunkAction => {
       "/authorizations",
       values
     );
-    console.log(res);
+    dispatch({
+      type: "login/login",
+      payload: res.data.data,
+    } as RootAction);
   };
 };
