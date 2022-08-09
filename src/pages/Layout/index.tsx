@@ -1,6 +1,11 @@
 import Icon from "@/components/Icon";
 import { TabBar } from "antd-mobile";
 import styles from "./index.module.scss";
+import { Switch, Route } from "react-router-dom";
+import Home from "@/pages/Home";
+import Question from "@/pages/Question";
+import Video from "@/pages/Video";
+import Profile from "@/pages/Profile";
 
 // 标签页数据
 const tabs = [
@@ -30,6 +35,24 @@ const Layout = () => {
           />
         ))}
       </TabBar>
+      <Switch>
+        {/* 需要精确匹配 */}
+        <Route path="/home" exact>
+          <Home />
+        </Route>
+
+        <Route path="/home/question">
+          <Question />
+        </Route>
+
+        <Route path="/home/video">
+          <Video />
+        </Route>
+
+        <Route path="/home/profile">
+          <Profile />
+        </Route>
+      </Switch>
     </div>
   );
 };
