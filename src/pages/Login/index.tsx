@@ -2,11 +2,14 @@ import styles from "./index.module.scss";
 import { NavBar, Form, Input, List, Button } from "antd-mobile";
 import { useHistory } from "react-router";
 import { LoginForm } from "@/types/data";
+import { useDispatch } from "react-redux";
+import { login } from "@/store/actions/login";
 
 export default function Login() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const finishFn = (values: LoginForm) => {
-    console.log(values.code, values.mobile);
+    dispatch(login(values));
   };
   return (
     <div className={styles.root}>
