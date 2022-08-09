@@ -1,22 +1,28 @@
 import styles from "./index.module.scss";
 import { NavBar, Toast, Form, Input, List, Button } from "antd-mobile";
 import { useHistory } from "react-router";
-import { LoginForm } from "@/types/data";
+import { ApiResponse, LoginForm } from "@/types/data";
 import { useDispatch } from "react-redux";
 import { login } from "@/store/actions/login";
+import { AxiosError } from "axios";
 
 export default function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
   const finishFn = async (values: LoginForm) => {
-    await dispatch(login(values));
-    Toast.show({
-      content: "登录成功",
-      duration: 1000,
-      afterClose: () => {
-        history.push("/home");
-      },
-    });
+    try {
+      await dispatch(login(values));
+      Toast.show({
+        content: "登录成功",
+        duration: 1000,
+        afterClose: () => {
+          history.push("/home");
+        },
+      });
+    } catch (e) {
+      const error = e as AxiosError<ApiResponse>;
+      console.log("登录出错", error.response?.data.message);
+    }
   };
   return (
     <div className={styles.root}>
