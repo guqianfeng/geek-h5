@@ -1,14 +1,11 @@
 import styles from "./index.module.scss";
 import { NavBar, Toast, Form, Input, List, Button } from "antd-mobile";
 import { useHistory } from "react-router";
-import { ApiResponse, LoginForm } from "@/types/data";
+import { LoginForm } from "@/types/data";
 import { useDispatch } from "react-redux";
 import { login, sendCode } from "@/store/actions/login";
-import { AxiosError } from "axios";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { InputRef } from "antd-mobile/es/components/input";
-import { RootAction } from "@/types/store";
-import { useState } from "react";
 
 export default function Login() {
   const history = useHistory();
@@ -55,6 +52,19 @@ export default function Login() {
       setSeconds((s) => s - 1);
     }, 1000);
   };
+  // 清理定时器: 每次秒数变化时判断倒计时是否结束
+  useEffect(() => {
+    if (seconds <= 0) {
+      clearInterval(timerRef.current);
+    }
+  }, [seconds]);
+
+  // 清理定时器: 组件销毁时
+  useEffect(() => {
+    return () => {
+      clearInterval(timerRef.current);
+    };
+  }, []);
   return (
     <div className={styles.root}>
       <NavBar onBack={() => history.go(-1)}></NavBar>
