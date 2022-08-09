@@ -1,5 +1,6 @@
 import Icon from "@/components/Icon";
 import { TabBar } from "antd-mobile";
+import styles from "./index.module.scss";
 
 // 标签页数据
 const tabs = [
@@ -12,7 +13,7 @@ const tabs = [
 //<Icon name={item.icon + "_sel"} className="tab-bar-item-icon" />
 const Layout = () => {
   return (
-    <div>
+    <div className={styles.root}>
       <TabBar className="tab-bar">
         {tabs.map((item) => (
           <TabBar.Item
