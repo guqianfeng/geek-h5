@@ -2,11 +2,10 @@ import Icon from "@/components/Icon";
 import { TabBar } from "antd-mobile";
 import styles from "./index.module.scss";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
-import Home from "@/pages/Home";
-import Question from "@/pages/Question";
-import Video from "@/pages/Video";
-import Profile from "@/pages/Profile";
-
+import Home from "./Home";
+import Question from "./Question";
+import Video from "./Video";
+import Profile from "./Profile";
 // 标签页数据
 const tabs = [
   { path: "/home", icon: "iconbtn_home", text: "首页" },
