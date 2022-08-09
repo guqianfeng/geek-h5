@@ -1,5 +1,5 @@
 import styles from "./index.module.scss";
-import { NavBar, Form, Input, List, Button } from "antd-mobile";
+import { NavBar, Toast, Form, Input, List, Button } from "antd-mobile";
 import { useHistory } from "react-router";
 import { LoginForm } from "@/types/data";
 import { useDispatch } from "react-redux";
@@ -8,8 +8,15 @@ import { login } from "@/store/actions/login";
 export default function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const finishFn = (values: LoginForm) => {
-    dispatch(login(values));
+  const finishFn = async (values: LoginForm) => {
+    await dispatch(login(values));
+    Toast.show({
+      content: "登录成功",
+      duration: 1000,
+      afterClose: () => {
+        history.push("/home");
+      },
+    });
   };
   return (
     <div className={styles.root}>
