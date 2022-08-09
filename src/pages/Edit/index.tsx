@@ -1,10 +1,16 @@
 import { getProfile } from "@/store/actions/profile";
 import { usePageEnter } from "@/utils/hooks";
-import { Button, List, DatePicker, NavBar } from "antd-mobile";
+import { Button, List, DatePicker, NavBar, Popup } from "antd-mobile";
 import classNames from "classnames";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import styles from "./index.module.scss";
+
+export type PopupState = {
+  visible: boolean;
+  type: "" | "name" | "intro";
+};
 
 const Item = List.Item;
 
@@ -20,6 +26,10 @@ const ProfileEdit = () => {
   // }, [dispatch]);
   const history = useHistory();
   const profile = usePageEnter(getProfile).profile.profile;
+  const [popupState, setPopupState] = useState<PopupState>({
+    visible: false,
+    type: "",
+  });
   return (
     <div className={styles.root}>
       <div className="content">
@@ -49,7 +59,16 @@ const ProfileEdit = () => {
             >
               头像
             </Item>
-            <Item arrow extra={profile.name}>
+            <Item
+              arrow
+              extra={profile.name}
+              onClick={() => {
+                setPopupState({
+                  visible: true,
+                  type: "name",
+                });
+              }}
+            >
               昵称
             </Item>
             <Item
@@ -59,6 +78,12 @@ const ProfileEdit = () => {
                   {profile.intro || "未填写"}
                 </span>
               }
+              onClick={() => {
+                setPopupState({
+                  visible: true,
+                  type: "intro",
+                });
+              }}
             >
               简介
             </Item>
@@ -86,6 +111,13 @@ const ProfileEdit = () => {
           <Button className="btn">退出登录</Button>
         </div>
       </div>
+      <Popup
+        visible={popupState.visible}
+        position="right"
+        bodyStyle={{ width: "100vw" }}
+      >
+        {popupState.type}
+      </Popup>
     </div>
   );
 };
