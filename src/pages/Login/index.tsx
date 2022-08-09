@@ -5,10 +5,14 @@ import { ApiResponse, LoginForm } from "@/types/data";
 import { useDispatch } from "react-redux";
 import { login } from "@/store/actions/login";
 import { AxiosError } from "axios";
+import { useRef } from "react";
+import { InputRef } from "antd-mobile/es/components/input";
 
 export default function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const mobileRef = useRef<InputRef>(null);
+  const [form] = Form.useForm();
   const finishFn = async (values: LoginForm) => {
     // try {
     //   await dispatch(login(values));
@@ -32,6 +36,15 @@ export default function Login() {
       },
     });
   };
+  const getCode = () => {
+    const mobileValue = form.getFieldValue("mobile");
+    const mobileErrors = form.getFieldError("mobile");
+    console.log({ mobileValue, mobileErrors });
+    if (!mobileValue || mobileErrors.length > 0) {
+      mobileRef.current?.nativeElement?.focus();
+      return;
+    }
+  };
   return (
     <div className={styles.root}>
       <NavBar onBack={() => history.go(-1)}></NavBar>
@@ -39,7 +52,7 @@ export default function Login() {
       <div className="login-form">
         <h2 className="title">账号登录</h2>
 
-        <Form onFinish={finishFn}>
+        <Form onFinish={finishFn} form={form}>
           <Form.Item
             className="login-item"
             name="mobile"
@@ -52,12 +65,15 @@ export default function Login() {
             ]}
             validateTrigger={["onChange", "onBlur"]}
           >
-            <Input placeholder="请输入用户名"></Input>
+            <Input placeholder="请输入用户名" ref={mobileRef}></Input>
           </Form.Item>
 
           <List.Item
+            arrow={false}
+            clickable={false}
             className="login-code-extra"
             extra={<span className="code-extra">发送验证码</span>}
+            onClick={getCode}
           >
             <Form.Item
               className="login-item"
