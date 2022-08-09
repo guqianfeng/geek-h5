@@ -8,6 +8,7 @@ import { AxiosError } from "axios";
 import { useRef } from "react";
 import { InputRef } from "antd-mobile/es/components/input";
 import { RootAction } from "@/types/store";
+import { useState } from "react";
 
 export default function Login() {
   const history = useHistory();
@@ -37,7 +38,10 @@ export default function Login() {
       },
     });
   };
-  const getCode = () => {
+  const [seconds, setSeconds] = useState(0);
+  const timerRef = useRef<number>();
+  const getCode = async () => {
+    if (seconds > 0) return;
     const mobileValue = form.getFieldValue("mobile");
     const mobileErrors = form.getFieldError("mobile");
     // console.log({ mobileValue, mobileErrors });
@@ -45,7 +49,11 @@ export default function Login() {
       mobileRef.current?.nativeElement?.focus();
       return;
     }
-    dispatch(sendCode(mobileValue));
+    await dispatch(sendCode(mobileValue));
+    setSeconds(60);
+    timerRef.current = window.setInterval(() => {
+      setSeconds((s) => s - 1);
+    }, 1000);
   };
   return (
     <div className={styles.root}>
@@ -74,7 +82,11 @@ export default function Login() {
             arrow={false}
             clickable={false}
             className="login-code-extra"
-            extra={<span className="code-extra">发送验证码</span>}
+            extra={
+              <span className="code-extra">
+                {seconds === 0 ? "发送验证码" : `${seconds}s后再发送`}
+              </span>
+            }
             onClick={getCode}
           >
             <Form.Item
