@@ -6,6 +6,7 @@ import {
 import { usePageEnter } from "@/utils/hooks";
 import { Button, List, DatePicker, NavBar, Popup, Toast } from "antd-mobile";
 import classNames from "classnames";
+import dayjs from "dayjs";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -49,6 +50,7 @@ const ProfileEdit = () => {
       visible: false,
     });
   const fileRef = useRef<HTMLInputElement>(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   return (
     <div className={styles.root}>
       <div className="content">
@@ -127,17 +129,34 @@ const ProfileEdit = () => {
             >
               性别
             </Item>
-            <Item arrow extra={profile.birthday}>
+            <Item
+              arrow
+              extra={profile.birthday}
+              onClick={() => {
+                setShowDatePicker(true);
+              }}
+            >
               生日
             </Item>
           </List>
 
           <DatePicker
-            visible={false}
+            visible={showDatePicker}
             value={new Date()}
             title="选择年月日"
             min={new Date(1900, 0, 1, 0, 0, 0)}
             max={new Date()}
+            onClose={() => {
+              setShowDatePicker(false);
+            }}
+            onConfirm={(date) => {
+              const birthday = dayjs(date).format("YYYY-MM-DD");
+              dispatch(
+                updateProfile({
+                  birthday,
+                })
+              );
+            }}
           />
         </div>
 
