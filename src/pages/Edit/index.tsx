@@ -1,10 +1,19 @@
+import { logout } from "@/store/actions/login";
 import {
   getProfile,
   updateProfile,
   updateProfilePhoto,
 } from "@/store/actions/profile";
 import { usePageEnter } from "@/utils/hooks";
-import { Button, List, DatePicker, NavBar, Popup, Toast } from "antd-mobile";
+import {
+  Button,
+  List,
+  DatePicker,
+  NavBar,
+  Popup,
+  Toast,
+  Dialog,
+} from "antd-mobile";
 import classNames from "classnames";
 import dayjs from "dayjs";
 import { useRef, useState } from "react";
@@ -51,6 +60,42 @@ const ProfileEdit = () => {
     });
   const fileRef = useRef<HTMLInputElement>(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const logoutFn = () => {
+    // console.log("logout");
+    Dialog.show({
+      title: "登出确认",
+      content: "亲，你确认要登出嘛？",
+      closeOnAction: true,
+      actions: [
+        [
+          {
+            key: "cancel",
+            text: "取消",
+            // onClick: () => {
+            //   console.log("cancel");
+            // },
+          },
+          {
+            key: "confirm",
+            text: "确认",
+            danger: true,
+            bold: true,
+            // onClick: () => {
+            //   console.log("confirm");
+            // },
+          },
+        ],
+      ],
+      onAction: (action, index) => {
+        // console.log(action, index);
+        if (action.key === "confirm" && index === 1) {
+          // console.log("confirm logout");
+          dispatch(logout());
+          history.replace("/login");
+        }
+      },
+    });
+  };
   return (
     <div className={styles.root}>
       <div className="content">
@@ -161,7 +206,9 @@ const ProfileEdit = () => {
         </div>
 
         <div className="logout">
-          <Button className="btn">退出登录</Button>
+          <Button className="btn" onClick={logoutFn}>
+            退出登录
+          </Button>
         </div>
       </div>
       <Popup

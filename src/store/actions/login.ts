@@ -1,7 +1,7 @@
 import { RootAction, RootThunkAction } from "@/types/store.d";
 import { LoginForm, ApiResponse, Token } from "@/types/data.d";
 import request from "@/utils/request";
-import { setToken } from "@/utils/token";
+import { removeToken, setToken } from "@/utils/token";
 export const login = (values: LoginForm): RootThunkAction => {
   return async (dispatch) => {
     const res = await request.post<ApiResponse<Token>>(
@@ -23,3 +23,24 @@ export function sendCode(mobile: string): RootThunkAction {
     await request.get(`/sms/codes/${mobile}`);
   };
 }
+
+export const logout = (): RootThunkAction => {
+  return async (dispatch) => {
+    removeToken();
+
+    dispatch({
+      type: "login/login",
+      payload: {},
+    } as RootAction);
+
+    dispatch({
+      type: "profile/set_profile",
+      payload: {},
+    } as RootAction);
+
+    dispatch({
+      type: "profile/set_user",
+      payload: {},
+    } as RootAction);
+  };
+};
