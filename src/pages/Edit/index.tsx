@@ -1,8 +1,12 @@
-import { getProfile, updateProfile } from "@/store/actions/profile";
+import {
+  getProfile,
+  updateProfile,
+  updateProfilePhoto,
+} from "@/store/actions/profile";
 import { usePageEnter } from "@/utils/hooks";
 import { Button, List, DatePicker, NavBar, Popup, Toast } from "antd-mobile";
 import classNames from "classnames";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import EditInput from "./EditInput";
@@ -44,6 +48,7 @@ const ProfileEdit = () => {
       type: "",
       visible: false,
     });
+  const fileRef = useRef<HTMLInputElement>(null);
   return (
     <div className={styles.root}>
       <div className="content">
@@ -196,10 +201,31 @@ const ProfileEdit = () => {
                 content: "修改性别成功",
                 icon: "success",
               });
+            } else if (type === "photo") {
+              // console.log("photo", value);
+              if (value === "1") {
+                fileRef.current?.click();
+              }
             }
           }}
         />
       </Popup>
+      <input
+        hidden
+        type="file"
+        onChange={async (e) => {
+          // console.log(e.target.files);
+          const file = e.target.files?.[0];
+          const formData = new FormData();
+          formData.append("photo", file!);
+          await dispatch(updateProfilePhoto(formData));
+          Toast.show({
+            content: "修改头像成功",
+            icon: "success",
+          });
+        }}
+        ref={fileRef}
+      />
     </div>
   );
 };

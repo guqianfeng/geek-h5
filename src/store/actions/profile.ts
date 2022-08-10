@@ -35,3 +35,10 @@ export const updateProfile = (data: Partial<Profile>): RootThunkAction => {
     disapth(getProfile());
   };
 };
+
+export const updateProfilePhoto = (data: FormData): RootThunkAction => {
+  return async (dispatch) => {
+    await request.patch("/user/photo", data);
+    dispatch(getProfile());
+  };
+};
