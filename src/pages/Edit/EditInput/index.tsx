@@ -10,15 +10,16 @@ import styles from "./index.module.scss";
 interface EditInputProps {
   type: "" | "name" | "intro";
   onClose?: () => void;
+  onSubmit?: (value: string, type: "" | "name" | "intro") => void;
 }
 
-const EditInput = ({ type, onClose }: EditInputProps) => {
+const EditInput = ({ type, onClose, onSubmit }: EditInputProps) => {
   const typeName = useMemo(() => (type === "name" ? "昵称" : "简介"), [type]);
   const profile = useSelector<RootState, Profile>(
     (state) => state.profile.profile
   );
-  const [value, setValue] = useState(() =>
-    type === "name" ? profile.name : profile.intro
+  const [value, setValue] = useState(
+    () => (type === "name" ? profile.name : profile.intro) || ""
   );
   const inputRef = useRef<InputRef>(null);
   const textAreaRef = useRef<TextAreaRef>(null);
@@ -30,7 +31,16 @@ const EditInput = ({ type, onClose }: EditInputProps) => {
     <div className={styles.root}>
       <NavBar
         className="navbar"
-        right={<span className="commit-btn">提交</span>}
+        right={
+          <span
+            className="commit-btn"
+            onClick={() => {
+              onSubmit?.(value, type);
+            }}
+          >
+            提交
+          </span>
+        }
         onBack={onClose}
       >
         编辑{typeName}

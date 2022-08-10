@@ -126,6 +126,9 @@ const ProfileEdit = () => {
               type: "",
             });
           }}
+          onSubmit={(value, type) => {
+            console.log(value, type);
+          }}
         />
       </Popup>
     </div>
