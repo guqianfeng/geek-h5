@@ -116,6 +116,7 @@ const ProfileEdit = () => {
         visible={popupState.visible}
         position="right"
         bodyStyle={{ width: "100vw" }}
+        destroyOnClose
       >
         <EditInput
           type={popupState.type}

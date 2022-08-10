@@ -32,18 +32,26 @@ const EditInput = ({ type, onClose }: EditInputProps) => {
       <div className="edit-input-content">
         <h3>{typeName}</h3>
 
-        <div className="input-wrap">
-          {type === "name" && <Input placeholder="请输入" value={value} />}
-          {type === "intro" && (
-            <TextArea
-              className="textarea"
-              placeholder="请输入简介"
-              showCount
-              maxLength={99}
+        {type === "name" && (
+          <div className="input-wrap">
+            <Input
+              placeholder="请输入"
               value={value}
+              onChange={(val) => setValue(val)}
             />
-          )}
-        </div>
+          </div>
+        )}
+
+        {type === "intro" && (
+          <TextArea
+            className="textarea"
+            placeholder="请输入简介"
+            showCount
+            maxLength={99}
+            value={value}
+            onChange={(val) => setValue(val)}
+          />
+        )}
       </div>
     </div>
   );
