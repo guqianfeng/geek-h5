@@ -1,6 +1,6 @@
 import styles from "./index.module.scss";
 import { NavBar, Toast, Form, Input, List, Button } from "antd-mobile";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { LoginForm } from "@/types/data";
 import { useDispatch } from "react-redux";
 import { login, sendCode } from "@/store/actions/login";
@@ -9,6 +9,7 @@ import { InputRef } from "antd-mobile/es/components/input";
 
 export default function Login() {
   const history = useHistory();
+  const location = useLocation<{ redirectURL: string }>();
   const dispatch = useDispatch();
   const mobileRef = useRef<InputRef>(null);
   const [form] = Form.useForm();
@@ -31,7 +32,8 @@ export default function Login() {
       content: "登录成功",
       duration: 1000,
       afterClose: () => {
-        history.push("/home");
+        const redirectURL = location.state.redirectURL;
+        history.push(redirectURL || "/home");
       },
     });
   };

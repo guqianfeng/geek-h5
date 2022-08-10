@@ -11,7 +11,16 @@ export default function AuthRoute({ component, ...rest }: RouteProps) {
         if (hasToken()) {
           return <Component></Component>;
         } else {
-          return <Redirect to={"/login"}></Redirect>;
+          return (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: {
+                  redirectURL: props.location.pathname,
+                },
+              }}
+            ></Redirect>
+          );
         }
       }}
     ></Route>
