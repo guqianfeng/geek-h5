@@ -1,9 +1,10 @@
 import { Profile } from "@/types/data";
 import { RootState } from "@/types/store";
 import { Input, NavBar, TextArea } from "antd-mobile";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-
+import { InputRef } from "antd-mobile/es/components/input";
+import { TextAreaRef } from "antd-mobile/es/components/text-area";
 import styles from "./index.module.scss";
 
 interface EditInputProps {
@@ -19,6 +20,12 @@ const EditInput = ({ type, onClose }: EditInputProps) => {
   const [value, setValue] = useState(() =>
     type === "name" ? profile.name : profile.intro
   );
+  const inputRef = useRef<InputRef>(null);
+  const textAreaRef = useRef<TextAreaRef>(null);
+  useEffect(() => {
+    inputRef.current?.focus();
+    textAreaRef.current?.focus();
+  }, []);
   return (
     <div className={styles.root}>
       <NavBar
@@ -38,6 +45,7 @@ const EditInput = ({ type, onClose }: EditInputProps) => {
               placeholder="请输入"
               value={value}
               onChange={(val) => setValue(val)}
+              ref={inputRef}
             />
           </div>
         )}
@@ -50,6 +58,7 @@ const EditInput = ({ type, onClose }: EditInputProps) => {
             maxLength={99}
             value={value}
             onChange={(val) => setValue(val)}
+            ref={textAreaRef}
           />
         )}
       </div>
