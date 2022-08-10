@@ -6,6 +6,7 @@ import Home from "./Home";
 import Question from "./Question";
 import Video from "./Video";
 import Profile from "./Profile";
+import AuthRoute from "@/components/auth-route";
 // 标签页数据
 const tabs = [
   { path: "/home", icon: "iconbtn_home", text: "首页" },
@@ -56,9 +57,7 @@ const Layout = () => {
           <Video />
         </Route>
 
-        <Route path="/home/profile">
-          <Profile />
-        </Route>
+        <AuthRoute path="/home/profile" component={Profile}></AuthRoute>
       </Switch>
     </div>
   );
