@@ -5,7 +5,6 @@ import { getToken, removeToken, setToken } from "./token";
 import store from "@/store";
 import { RootAction } from "@/types/store";
 import history from "@/router";
-import { logout } from "@/store/actions/login";
 
 const baseURL = "http://geek.itheima.net/v1_0/";
 const http = axios.create({

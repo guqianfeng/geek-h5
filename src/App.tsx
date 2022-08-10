@@ -6,6 +6,7 @@ import ProfileEdit from "./pages/Edit";
 import Login from "./pages/Login";
 import Playground from "./pages/Playground";
 import AuthRoute from "./components/auth-route";
+import Chat from "./pages/Chat";
 
 export default function App() {
   return (
@@ -37,6 +38,9 @@ export default function App() {
           }}
         ></Route> */}
         <AuthRoute path="/profile/edit" component={ProfileEdit}></AuthRoute>
+        {/* 后端服务器问题先cv结构处理 */}
+        <Route path="/chat" component={Chat}></Route>
+        {/* <AuthRoute path="/chat" component={Chat}></AuthRoute> */}
       </Switch>
     </div>
   );
