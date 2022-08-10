@@ -1,19 +1,27 @@
 import styles from "./index.module.scss";
 
 type EditListProps = {
+  type: "gender" | "photo" | "";
   onClose?: () => void;
 };
+const genderList = [
+  { title: "男", value: "0" },
+  { title: "女", value: "1" },
+];
 
-const EditList = ({ onClose }: EditListProps) => {
+const photoList = [
+  { title: "拍照", value: "" },
+  { title: "本地选择", value: "" },
+];
+const EditList = ({ type, onClose }: EditListProps) => {
+  const list = type === "gender" ? genderList : photoList;
   return (
     <div className={styles.root}>
-      <div className="list-item" onClick={onClose}>
-        男
-      </div>
-      <div className="list-item" onClick={onClose}>
-        女
-      </div>
-
+      {list.map((item) => (
+        <div key={item.title} className="list-item" onClick={onClose}>
+          {item.title}
+        </div>
+      ))}
       <div className="list-item" onClick={onClose}>
         取消
       </div>

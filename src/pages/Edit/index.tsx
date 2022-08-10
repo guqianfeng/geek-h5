@@ -183,6 +183,7 @@ const ProfileEdit = () => {
               visible: false,
             });
           }}
+          type={popupStateFromBottom.type}
         />
       </Popup>
     </div>
