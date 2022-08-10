@@ -184,6 +184,20 @@ const ProfileEdit = () => {
             });
           }}
           type={popupStateFromBottom.type}
+          onSubmit={async (value, type) => {
+            // console.log({ value, type });
+            if (type === "gender") {
+              await dispatch(
+                updateProfile({
+                  [type]: +value,
+                })
+              );
+              Toast.show({
+                content: "修改性别成功",
+                icon: "success",
+              });
+            }
+          }}
         />
       </Popup>
     </div>

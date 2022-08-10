@@ -1,8 +1,11 @@
 import styles from "./index.module.scss";
 
+type EditListType = "gender" | "photo" | "";
+
 type EditListProps = {
-  type: "gender" | "photo" | "";
+  type: EditListType;
   onClose?: () => void;
+  onSubmit?: (value: string, type: EditListType) => void;
 };
 const genderList = [
   { title: "男", value: "0" },
@@ -10,15 +13,22 @@ const genderList = [
 ];
 
 const photoList = [
-  { title: "拍照", value: "" },
-  { title: "本地选择", value: "" },
+  { title: "拍照", value: "0" },
+  { title: "本地选择", value: "1" },
 ];
-const EditList = ({ type, onClose }: EditListProps) => {
+const EditList = ({ type, onClose, onSubmit }: EditListProps) => {
   const list = type === "gender" ? genderList : photoList;
   return (
     <div className={styles.root}>
       {list.map((item) => (
-        <div key={item.title} className="list-item" onClick={onClose}>
+        <div
+          key={item.title}
+          className="list-item"
+          onClick={() => {
+            onSubmit?.(item.value, type);
+            onClose?.();
+          }}
+        >
           {item.title}
         </div>
       ))}
