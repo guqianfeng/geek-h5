@@ -28,3 +28,10 @@ export const getProfile = (): RootThunkAction => {
     } as ProfileAction);
   };
 };
+
+export const updateProfile = (data: Partial<Profile>): RootThunkAction => {
+  return async (disapth) => {
+    await request.patch("/user/profile", data);
+    disapth(getProfile());
+  };
+};

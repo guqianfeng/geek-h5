@@ -1,8 +1,9 @@
-import { getProfile } from "@/store/actions/profile";
+import { getProfile, updateProfile } from "@/store/actions/profile";
 import { usePageEnter } from "@/utils/hooks";
-import { Button, List, DatePicker, NavBar, Popup } from "antd-mobile";
+import { Button, List, DatePicker, NavBar, Popup, Toast } from "antd-mobile";
 import classNames from "classnames";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import EditInput from "./EditInput";
 
@@ -25,6 +26,7 @@ const ProfileEdit = () => {
   //   // console.log("发送请求");
   //   dispatch(getProfile());
   // }, [dispatch]);
+  const dispatch = useDispatch();
   const history = useHistory();
   const profile = usePageEnter(getProfile).profile.profile;
   const [popupState, setPopupState] = useState<PopupState>({
@@ -126,8 +128,20 @@ const ProfileEdit = () => {
               type: "",
             });
           }}
-          onSubmit={(value, type) => {
-            console.log(value, type);
+          onSubmit={async (value, type) => {
+            await dispatch(
+              updateProfile({
+                [type]: value,
+              })
+            );
+            Toast.show({
+              content: "修改成功",
+              icon: "success",
+            });
+            setPopupState({
+              type: "",
+              visible: false,
+            });
           }}
         />
       </Popup>
