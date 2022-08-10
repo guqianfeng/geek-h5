@@ -29,3 +29,7 @@ export interface Profile {
   birthday: string;
   intro?: any;
 }
+type Message = {
+  type: "robot" | "user";
+  text: string;
+};
