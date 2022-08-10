@@ -6,12 +6,18 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import EditInput from "./EditInput";
+import EditList from "./EditList";
 
 import styles from "./index.module.scss";
 
 export type PopupState = {
   visible: boolean;
+};
+export type PopupStateFromRight = PopupState & {
   type: "" | "name" | "intro";
+};
+export type PopupStateFromBottom = PopupState & {
+  type: "" | "gender" | "photo";
 };
 
 const Item = List.Item;
@@ -29,10 +35,15 @@ const ProfileEdit = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const profile = usePageEnter(getProfile).profile.profile;
-  const [popupState, setPopupState] = useState<PopupState>({
+  const [popupState, setPopupState] = useState<PopupStateFromRight>({
     visible: false,
     type: "",
   });
+  const [popupStateFromBottom, setPopupStateFromBottom] =
+    useState<PopupStateFromBottom>({
+      type: "",
+      visible: false,
+    });
   return (
     <div className={styles.root}>
       <div className="content">
@@ -59,6 +70,12 @@ const ProfileEdit = () => {
                 </span>
               }
               arrow
+              onClick={() => {
+                setPopupStateFromBottom({
+                  visible: true,
+                  type: "photo",
+                });
+              }}
             >
               头像
             </Item>
@@ -93,7 +110,16 @@ const ProfileEdit = () => {
           </List>
 
           <List className="profile-list">
-            <Item arrow extra={profile.gender === 0 ? "男" : "女"}>
+            <Item
+              arrow
+              extra={profile.gender === 0 ? "男" : "女"}
+              onClick={() => {
+                setPopupStateFromBottom({
+                  visible: true,
+                  type: "gender",
+                });
+              }}
+            >
               性别
             </Item>
             <Item arrow extra={profile.birthday}>
@@ -144,6 +170,13 @@ const ProfileEdit = () => {
             });
           }}
         />
+      </Popup>
+      <Popup
+        visible={popupStateFromBottom.visible}
+        destroyOnClose
+        position="bottom"
+      >
+        <EditList />
       </Popup>
     </div>
   );
