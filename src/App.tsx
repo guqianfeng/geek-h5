@@ -5,6 +5,7 @@ import Layout from "./pages/Layout";
 import ProfileEdit from "./pages/Edit";
 import Login from "./pages/Login";
 import Playground from "./pages/Playground";
+import { hasToken } from "./utils/token";
 
 export default function App() {
   return (
@@ -23,9 +24,18 @@ export default function App() {
         <Route path={"/home"} component={Layout}></Route>
         <Route path={"/login"} component={Login}></Route>
         <Route path={"/playground"} component={Playground}></Route>
-        <Route path="/profile/edit">
-          <ProfileEdit />
-        </Route>
+        {/* <Route path="/profile/edit" component={ProfileEdit}></Route> */}
+        <Route
+          path="/profile/edit"
+          render={(props) => {
+            console.log(props);
+            if (hasToken()) {
+              return <ProfileEdit />;
+            } else {
+              return <Redirect to={"/login"}></Redirect>;
+            }
+          }}
+        ></Route>
       </Switch>
     </div>
   );
