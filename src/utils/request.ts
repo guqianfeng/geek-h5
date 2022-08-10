@@ -1,9 +1,11 @@
 import { ApiResponse, Token } from "@/types/data";
 import axios, { AxiosError } from "axios";
 import { Toast } from "antd-mobile";
-import { getToken, setToken } from "./token";
+import { getToken, removeToken, setToken } from "./token";
 import store from "@/store";
 import { RootAction } from "@/types/store";
+import history from "@/router";
+import { logout } from "@/store/actions/login";
 
 const baseURL = "http://geek.itheima.net/v1_0/";
 const http = axios.create({
@@ -64,9 +66,17 @@ http.interceptors.response.use(
             payload: newToken,
           } as RootAction);
           return http(error.response.config);
-        } catch (e) {}
+        } catch (e) {
+          history.push("/login");
+          removeToken();
+          store.dispatch({
+            type: "login/login",
+            payload: {},
+          } as RootAction);
+        }
       } else {
         // 没有token直接跳转首页
+        history.push("/login");
       }
     }
 
