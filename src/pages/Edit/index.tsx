@@ -176,7 +176,14 @@ const ProfileEdit = () => {
         destroyOnClose
         position="bottom"
       >
-        <EditList />
+        <EditList
+          onClose={() => {
+            setPopupStateFromBottom({
+              type: "",
+              visible: false,
+            });
+          }}
+        />
       </Popup>
     </div>
   );
