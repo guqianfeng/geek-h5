@@ -1,5 +1,8 @@
+import { Profile } from "@/types/data";
+import { RootState } from "@/types/store";
 import { Input, NavBar, TextArea } from "antd-mobile";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 
 import styles from "./index.module.scss";
 
@@ -10,6 +13,12 @@ interface EditInputProps {
 
 const EditInput = ({ type, onClose }: EditInputProps) => {
   const typeName = useMemo(() => (type === "name" ? "昵称" : "简介"), [type]);
+  const profile = useSelector<RootState, Profile>(
+    (state) => state.profile.profile
+  );
+  const [value, setValue] = useState(() =>
+    type === "name" ? profile.name : profile.intro
+  );
   return (
     <div className={styles.root}>
       <NavBar
@@ -24,13 +33,14 @@ const EditInput = ({ type, onClose }: EditInputProps) => {
         <h3>{typeName}</h3>
 
         <div className="input-wrap">
-          {type === "name" && <Input placeholder="请输入" />}
+          {type === "name" && <Input placeholder="请输入" value={value} />}
           {type === "intro" && (
             <TextArea
               className="textarea"
               placeholder="请输入简介"
               showCount
               maxLength={99}
+              value={value}
             />
           )}
         </div>
