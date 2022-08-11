@@ -1,7 +1,7 @@
 import Icon from "@/components/Icon";
 import { getAllChannels, getUserChennels } from "@/store/actions/home";
 import { Channel } from "@/types/data";
-import { RootState } from "@/types/store";
+import { RootAction, RootState } from "@/types/store";
 import { Popup, Tabs } from "antd-mobile";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +22,17 @@ const Home = () => {
   return (
     <div className={styles.root}>
       {/* 频道 Tabs 列表 */}
-      <Tabs className="tabs" activeLineMode="fixed">
+      <Tabs
+        className="tabs"
+        activeLineMode="fixed"
+        onChange={(value) => {
+          console.log(value);
+          dispatch({
+            type: "home/set_active_channel_id",
+            payload: +value,
+          } as RootAction);
+        }}
+      >
         {/* <Tabs.Tab title="推荐" key="1">
           推荐频道的内容
         </Tabs.Tab>

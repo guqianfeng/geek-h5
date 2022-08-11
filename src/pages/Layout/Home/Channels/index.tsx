@@ -25,6 +25,9 @@ const Channels = ({ onClose }: ChannelsProps) => {
   // });
   // console.log(recommandChannels);
   const recommandChannels = differenceBy(allChannels, userChannels, "id");
+  const activeChannelId = useSelector<RootState, number>(
+    (state) => state.home.activeChannelId
+  );
   return (
     <div className={styles.root}>
       <div className="channel-header">
@@ -47,7 +50,9 @@ const Channels = ({ onClose }: ChannelsProps) => {
             {userChannels.map((channel) => (
               <span
                 key={channel.id}
-                className={classnames("channel-list-item")}
+                className={classnames("channel-list-item", {
+                  selected: activeChannelId === channel.id,
+                })}
               >
                 {channel.name}
                 <Icon type="iconbtn_tag_close" />

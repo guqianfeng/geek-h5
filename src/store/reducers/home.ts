@@ -4,11 +4,13 @@ import { RootAction } from "@/types/store";
 type HomeState = {
   userChannels: Channel[];
   allChannels: Channel[];
+  activeChannelId: number;
 };
 
 const initState: HomeState = {
   userChannels: [],
   allChannels: [],
+  activeChannelId: -1,
 };
 
 const homeReducer = (state = initState, action: RootAction): HomeState => {
@@ -22,6 +24,12 @@ const homeReducer = (state = initState, action: RootAction): HomeState => {
     return {
       ...state,
       allChannels: action.payload,
+    };
+  }
+  if (action.type === "home/set_active_channel_id") {
+    return {
+      ...state,
+      activeChannelId: action.payload,
     };
   }
   return state;
