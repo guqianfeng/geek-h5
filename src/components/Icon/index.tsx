@@ -1,8 +1,8 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import classnames from "classnames";
 interface IconProps {
   type: string;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent) => void;
   className?: string;
 }
 export default function Icon({ type, onClick, className }: IconProps) {
@@ -10,7 +10,7 @@ export default function Icon({ type, onClick, className }: IconProps) {
     <svg
       className={classnames("icon", className)}
       aria-hidden="true"
-      onClick={onClick}
+      onClick={(e) => onClick?.(e)}
     >
       {/* 使用时只需要将此处 iconbtn_like_sel 替换为你要的 icon 名称即可 */}
       {/* <use xlinkHref="#iconbtn_like_sel"></use> */}

@@ -7,6 +7,7 @@ import { RootAction, RootState } from "@/types/store";
 import { Channel } from "@/types/data";
 import { differenceBy } from "lodash";
 import { addMyChannel } from "@/store/actions/home";
+import { useState } from "react";
 
 type ChannelsProps = {
   onClose?: () => void;
@@ -30,6 +31,7 @@ const Channels = ({ onClose }: ChannelsProps) => {
   const activeChannelId = useSelector<RootState, number>(
     (state) => state.home.activeChannelId
   );
+  const [isEdit, setIsEdit] = useState(false);
   return (
     <div className={styles.root}>
       <div className="channel-header">
@@ -37,11 +39,18 @@ const Channels = ({ onClose }: ChannelsProps) => {
       </div>
       <div className="channel-content">
         {/* 编辑时，添加类名 edit */}
-        <div className={classnames("channel-item")}>
+        <div className={classnames("channel-item", { edit: isEdit })}>
           <div className="channel-item-header">
             <span className="channel-item-title">我的频道</span>
             <span className="channel-item-title-extra">点击进入频道</span>
-            <span className="channel-item-edit">编辑</span>
+            <span
+              className="channel-item-edit"
+              onClick={() => {
+                setIsEdit(!isEdit);
+              }}
+            >
+              {isEdit ? "完成" : "编辑"}
+            </span>
           </div>
           <div className="channel-list">
             {/* 选中时，添加类名 selected */}
@@ -56,6 +65,9 @@ const Channels = ({ onClose }: ChannelsProps) => {
                   selected: activeChannelId === channel.id,
                 })}
                 onClick={() => {
+                  if (isEdit) {
+                    return;
+                  }
                   dispatch({
                     type: "home/set_active_channel_id",
                     payload: channel.id,
@@ -64,7 +76,14 @@ const Channels = ({ onClose }: ChannelsProps) => {
                 }}
               >
                 {channel.name}
-                <Icon type="iconbtn_tag_close" />
+                <Icon
+                  type="iconbtn_tag_close"
+                  onClick={(e) => {
+                    // console.log(e);
+                    // e.stopPropagation();
+                    // e.preventDefault();
+                  }}
+                />
               </span>
             ))}
           </div>
