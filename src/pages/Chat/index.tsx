@@ -1,13 +1,13 @@
 import Icon from "@/components/Icon";
 import { Message, Profile } from "@/types/data";
 import { NavBar, Input } from "antd-mobile";
-import { useEffect, useState } from "react";
+import { useEffect, useState, KeyboardEvent, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "./index.module.scss";
 import classnames from "classnames";
 import { useSelector } from "react-redux";
 import { RootState } from "@/types/store";
-import io from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 import { getToken } from "@/utils/token";
 
 // http://toutiao.itheima.net
@@ -19,10 +19,26 @@ const Chat = () => {
     { type: "robot", text: "亲爱的用户您好，小智同学为您服务。" },
     { type: "user", text: "你好" },
   ]);
+  const [newMsg, setNewMsg] = useState<string>("");
+  const clientRef = useRef<Socket>();
   const profile = useSelector<RootState, Profile>(
     (state) => state.profile.profile
   );
+  const sendMessageToRobot = (e: KeyboardEvent) => {
+    // console.log(e.key);
+  };
 
+  const enterPressFn = () => {
+    console.log("按下enter", newMsg);
+    const trimMsg = newMsg.trim();
+    if (trimMsg) {
+      clientRef.current!.emit("message", {
+        msg: trimMsg,
+        timstamp: +new Date(),
+      });
+      setNewMsg("");
+    }
+  };
   useEffect(() => {
     const client = io("http://toutiao.itheima.net", {
       transports: ["websocket"],
@@ -43,6 +59,10 @@ const Chat = () => {
     client.on("disconnect", () => {
       console.log("断开连接");
     });
+    client.on("message", (data) => {
+      console.log({ data });
+    });
+    clientRef.current = client;
     return () => {
       client.close();
     };
@@ -88,7 +108,16 @@ const Chat = () => {
 
       {/* 底部消息输入框 */}
       <div className="input-footer">
-        <Input className="no-border input" placeholder="请描述您的问题" />
+        <Input
+          className="no-border input"
+          placeholder="请描述您的问题"
+          value={newMsg}
+          onKeyUp={sendMessageToRobot}
+          onEnterPress={enterPressFn}
+          onChange={(value) => {
+            setNewMsg(value);
+          }}
+        />
         <Icon type="iconbianji" />
       </div>
     </div>
