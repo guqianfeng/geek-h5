@@ -36,6 +36,13 @@ const Chat = () => {
         msg: trimMsg,
         timstamp: +new Date(),
       });
+      setMessages([
+        ...messages,
+        {
+          type: "user",
+          text: trimMsg,
+        },
+      ]);
       setNewMsg("");
     }
   };
@@ -60,7 +67,13 @@ const Chat = () => {
       console.log("断开连接");
     });
     client.on("message", (data) => {
-      console.log({ data });
+      setMessages((messages) => [
+        ...messages,
+        {
+          type: "robot",
+          text: data.msg,
+        },
+      ]);
     });
     clientRef.current = client;
     return () => {
@@ -68,6 +81,11 @@ const Chat = () => {
     };
   }, []);
 
+  const chatListRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = chatListRef.current;
+    el!.scrollTop = el!.scrollHeight - el!.offsetHeight;
+  }, [messages]);
   return (
     <div className={styles.root}>
       {/* 顶部导航栏 */}
@@ -76,7 +94,7 @@ const Chat = () => {
       </NavBar>
 
       {/* 聊天记录列表 */}
-      <div className="chat-list">
+      <div className="chat-list" ref={chatListRef}>
         {/* 机器人的消息 */}
         {/* <div className="chat-item">
           <Icon type="iconbtn_xiaozhitongxue" />
