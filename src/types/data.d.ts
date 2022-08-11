@@ -56,6 +56,6 @@ interface Article {
 }
 
 interface Cover {
-  type: number;
+  type: 0 | 1 | 3;
   images?: string[];
 }

@@ -1,50 +1,58 @@
-import classnames from 'classnames'
+import classnames from "classnames";
 
-import Icon from '@/components/Icon'
+import Icon from "@/components/Icon";
 
-import styles from './index.module.scss'
+import styles from "./index.module.scss";
+import { Article } from "@/types/data";
+
+import dayjs from "dayjs";
+import releativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/zh-cn";
+
+dayjs.locale("zh-cn");
+dayjs.extend(releativeTime);
 
 type Props = {
+  article: Article;
   /**
    * 0 表示无图
    * 1 表示单图
    * 3 表示三图
    */
-  type?: 0 | 1 | 3
-}
+  type?: 0 | 1 | 3;
+};
 
-const ArticleItem = ({ type = 0 }: Props) => {
+const ArticleItem = ({ article, type = 0 }: Props) => {
   return (
     <div className={styles.root}>
       <div
         className={classnames(
-          'article-content',
-          type === 3 && 't3',
-          type === 0 && 'none-mt'
+          "article-content",
+          type === 3 && "t3",
+          type === 0 && "none-mt"
         )}
       >
-        <h3>Vue响应式----数据响应式原理</h3>
+        <h3>{article.title}</h3>
         {type !== 0 && (
           <div className="article-imgs">
-            <div className="article-img-wrapper">
-              <img
-                src="http://geek.itheima.net/resources/images/63.jpg"
-                alt=""
-              />
-            </div>
+            {article.cover?.images?.map((item, index) => (
+              <div className="article-img-wrapper">
+                <img src={item} alt="" key={index} />
+              </div>
+            ))}
           </div>
         )}
       </div>
-      <div className={classnames('article-info', type === 0 && 'none-mt')}>
-        <span>黑马先锋</span>
-        <span>99 评论</span>
-        <span>2 天前</span>
+      <div className={classnames("article-info", type === 0 && "none-mt")}>
+        <span>{article.aut_name}</span>
+        <span>{article.comm_count} 评论</span>
+        <span>{dayjs(article.pubdate).fromNow()}</span>
         <span className="close">
           <Icon type="iconbtn_essay_close" />
         </span>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ArticleItem
+export default ArticleItem;

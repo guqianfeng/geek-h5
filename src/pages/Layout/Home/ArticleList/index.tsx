@@ -1,6 +1,8 @@
 import { getArticles } from "@/store/actions/home";
+import { ArticlePage } from "@/types/data";
+import { RootState } from "@/types/store";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ArticleItem from "../ArticleItem";
 
 import styles from "./index.module.scss";
@@ -14,12 +16,16 @@ const ArticleList = ({ channelId }: ArticleListProps) => {
   useEffect(() => {
     dispatch(getArticles(channelId));
   }, [dispatch, channelId]);
+  const articlePage = useSelector<RootState, ArticlePage>(
+    (state) => state.home.articleMap[channelId]
+  );
   return (
     <div className={styles.root}>
-      {/* 文章列表中的每一项 */}
-      <div className="article-item">
-        <ArticleItem />
-      </div>
+      {articlePage?.results?.map((item) => (
+        <div className="article-item" key={item.art_id}>
+          <ArticleItem article={item} type={item.cover.type} />
+        </div>
+      ))}
     </div>
   );
 };
