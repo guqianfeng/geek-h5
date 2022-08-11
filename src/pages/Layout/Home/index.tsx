@@ -5,6 +5,7 @@ import { RootAction, RootState } from "@/types/store";
 import { Popup, Tabs } from "antd-mobile";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ArticleList from "./ArticleList";
 import Channels from "./Channels";
 
 import styles from "./index.module.scss";
@@ -64,7 +65,7 @@ const Home = () => {
         </Tabs.Tab> */}
         {userChannels.map((channel) => (
           <Tabs.Tab title={channel.name} key={channel.id}>
-            {channel.name}
+            <ArticleList />
           </Tabs.Tab>
         ))}
       </Tabs>
