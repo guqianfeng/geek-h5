@@ -2,9 +2,10 @@ import Icon from "@/components/Icon";
 import { getUserChennels } from "@/store/actions/home";
 import { Channel } from "@/types/data";
 import { RootState } from "@/types/store";
-import { Tabs } from "antd-mobile";
-import { useEffect } from "react";
+import { Popup, Tabs } from "antd-mobile";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Channels from "./Channels";
 
 import styles from "./index.module.scss";
 
@@ -16,6 +17,7 @@ const Home = () => {
   const userChannels = useSelector<RootState, Channel[]>(
     (state) => state.home.userChannels
   );
+  const [popupVisible, setPopupVisible] = useState(false);
   return (
     <div className={styles.root}>
       {/* 频道 Tabs 列表 */}
@@ -48,8 +50,20 @@ const Home = () => {
 
       <div className="tabs-opration">
         <Icon type="iconbtn_search" />
-        <Icon type="iconbtn_channel" />
+        <Icon
+          type="iconbtn_channel"
+          onClick={() => {
+            setPopupVisible(true);
+          }}
+        />
       </div>
+      <Popup
+        visible={popupVisible}
+        bodyStyle={{ height: "100vh" }}
+        position="left"
+      >
+        <Channels />
+      </Popup>
     </div>
   );
 };
