@@ -36,8 +36,8 @@ const ArticleItem = ({ article, type = 0 }: Props) => {
         {type !== 0 && (
           <div className="article-imgs">
             {article.cover?.images?.map((item, index) => (
-              <div className="article-img-wrapper">
-                <img src={item} alt="" key={index} />
+              <div className="article-img-wrapper" key={index}>
+                <img src={item} alt="" />
               </div>
             ))}
           </div>
