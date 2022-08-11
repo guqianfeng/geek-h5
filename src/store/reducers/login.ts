@@ -3,7 +3,7 @@ import { RootAction } from "@/types/store";
 import { getToken } from "@/utils/token";
 const initialState: Token = getToken();
 function loginReducer(state = initialState, action: RootAction) {
-  if (action.type === "login/login") {
+  if (action.type === "login/set_token") {
     return action.payload;
   }
   return state;

@@ -61,7 +61,7 @@ http.interceptors.response.use(
           };
           setToken(newToken);
           store.dispatch({
-            type: "login/login",
+            type: "login/set_token",
             payload: newToken,
           } as RootAction);
           return http(error.response.config);
@@ -69,7 +69,7 @@ http.interceptors.response.use(
           history.push("/login");
           removeToken();
           store.dispatch({
-            type: "login/login",
+            type: "login/set_token",
             payload: {},
           } as RootAction);
         }

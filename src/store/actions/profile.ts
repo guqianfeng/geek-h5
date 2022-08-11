@@ -1,4 +1,4 @@
-import { UserAction, ProfileAction } from "@/types/store.d";
+import { RootAction } from "@/types/store.d";
 import { ApiResponse, User, Profile } from "@/types/data";
 import { RootThunkAction } from "@/types/store.d";
 import request from "@/utils/request";
@@ -12,7 +12,7 @@ export const getUser = (): RootThunkAction => {
     dispatch({
       type: "profile/set_user",
       payload: user,
-    } as UserAction);
+    } as RootAction);
   };
 };
 
@@ -25,7 +25,7 @@ export const getProfile = (): RootThunkAction => {
     dispatch({
       type: "profile/set_profile",
       payload: profile,
-    } as ProfileAction);
+    } as RootAction);
   };
 };
 

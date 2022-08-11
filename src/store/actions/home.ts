@@ -1,5 +1,5 @@
 import { ApiResponse, Channel } from "@/types/data";
-import { RootThunkAction } from "@/types/store";
+import { RootAction, RootThunkAction } from "@/types/store";
 import http from "@/utils/request";
 
 export const getUserChennels = (): RootThunkAction => {
@@ -9,6 +9,10 @@ export const getUserChennels = (): RootThunkAction => {
       "/user/channels"
     );
     const channels = res.data.data.channels;
-    console.log(channels);
+    // console.log(channels);
+    dispatch({
+      type: "home/set_user_channels",
+      payload: channels,
+    } as RootAction);
   };
 };

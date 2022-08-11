@@ -10,7 +10,7 @@ export const login = (values: LoginForm): RootThunkAction => {
     );
     const token = res.data.data;
     dispatch({
-      type: "login/login",
+      type: "login/set_token",
       payload: token,
     } as RootAction);
     setToken(token);
@@ -29,7 +29,7 @@ export const logout = (): RootThunkAction => {
     removeToken();
 
     dispatch({
-      type: "login/login",
+      type: "login/set_token",
       payload: {},
     } as RootAction);
 
