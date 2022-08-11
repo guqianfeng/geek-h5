@@ -62,7 +62,11 @@ const Home = () => {
         bodyStyle={{ height: "100vh" }}
         position="left"
       >
-        <Channels />
+        <Channels
+          onClose={() => {
+            setPopupVisible(false);
+          }}
+        />
       </Popup>
     </div>
   );

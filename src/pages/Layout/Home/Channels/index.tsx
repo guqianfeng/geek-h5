@@ -6,14 +6,18 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/types/store";
 import { Channel } from "@/types/data";
 
-const Channels = () => {
+type ChannelsProps = {
+  onClose?: () => void;
+};
+
+const Channels = ({ onClose }: ChannelsProps) => {
   const userChannels = useSelector<RootState, Channel[]>(
     (state) => state.home.userChannels
   );
   return (
     <div className={styles.root}>
       <div className="channel-header">
-        <Icon type="iconbtn_channel_close" />
+        <Icon type="iconbtn_channel_close" onClick={onClose} />
       </div>
       <div className="channel-content">
         {/* 编辑时，添加类名 edit */}
