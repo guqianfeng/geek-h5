@@ -22,12 +22,18 @@ export type HomeSetUserChannelsAction = {
   payload: Channel[];
 };
 
+export type HomeSetAllChannelsAction = {
+  type: "home/set_all_channels";
+  payload: Channel[];
+};
+
 // 所有 Action 汇总成的类型
 export type RootAction =
   | LoginSetTokenAction
   | ProfileSetUserAction
   | ProfileSetProfileAction
-  | HomeSetUserChannelsAction;
+  | HomeSetUserChannelsAction
+  | HomeSetAllChannelsAction;
 
 export type RootState = ReturnType<typeof store.getState>;
 

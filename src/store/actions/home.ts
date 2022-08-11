@@ -30,3 +30,16 @@ export const getUserChennels = (): RootThunkAction => {
     } as RootAction);
   };
 };
+
+export const getAllChannels = (): RootThunkAction => {
+  return async (dispatch) => {
+    const res = await http.get<ApiResponse<{ channels: Channel[] }>>(
+      "/channels"
+    );
+    const allChannels = res.data.data.channels;
+    dispatch({
+      type: "home/set_all_channels",
+      payload: allChannels,
+    } as RootAction);
+  };
+};

@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import { getUserChennels } from "@/store/actions/home";
+import { getAllChannels, getUserChennels } from "@/store/actions/home";
 import { Channel } from "@/types/data";
 import { RootState } from "@/types/store";
 import { Popup, Tabs } from "antd-mobile";
@@ -13,6 +13,7 @@ const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserChennels());
+    dispatch(getAllChannels());
   }, [dispatch]);
   const userChannels = useSelector<RootState, Channel[]>(
     (state) => state.home.userChannels
