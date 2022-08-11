@@ -14,6 +14,15 @@ const Channels = ({ onClose }: ChannelsProps) => {
   const userChannels = useSelector<RootState, Channel[]>(
     (state) => state.home.userChannels
   );
+  const allChannels = useSelector<RootState, Channel[]>(
+    (state) => state.home.allChannels
+  );
+  // console.log({ userChannels, allChannels });
+  const recommandChannels = allChannels.filter((item) => {
+    const channel = userChannels.find((userCh) => userCh.id === item.id);
+    return !channel;
+  });
+  // console.log(recommandChannels);
   return (
     <div className={styles.root}>
       <div className="channel-header">
@@ -51,7 +60,11 @@ const Channels = ({ onClose }: ChannelsProps) => {
             <span className="channel-item-title-extra">点击添加频道</span>
           </div>
           <div className="channel-list">
-            <span className="channel-list-item">+ HTML</span>
+            {recommandChannels.map((item) => (
+              <span key={item.id} className="channel-list-item">
+                + {item.name}
+              </span>
+            ))}
           </div>
         </div>
       </div>
