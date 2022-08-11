@@ -1,12 +1,16 @@
 import Icon from "@/components/Icon";
 import { Message, Profile } from "@/types/data";
 import { NavBar, Input } from "antd-mobile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "./index.module.scss";
 import classnames from "classnames";
 import { useSelector } from "react-redux";
 import { RootState } from "@/types/store";
+import io from "socket.io-client";
+import { getToken } from "@/utils/token";
+
+// http://toutiao.itheima.net
 
 const Chat = () => {
   const history = useHistory();
@@ -18,6 +22,32 @@ const Chat = () => {
   const profile = useSelector<RootState, Profile>(
     (state) => state.profile.profile
   );
+
+  useEffect(() => {
+    const client = io("http://toutiao.itheima.net", {
+      transports: ["websocket"],
+      query: {
+        token: getToken(),
+      },
+    });
+    client.on("connect", () => {
+      console.log("建立连接");
+      setMessages([
+        ...messages,
+        {
+          type: "robot",
+          text: "小智同学很高兴为您服务！！！",
+        },
+      ]);
+    });
+    client.on("disconnect", () => {
+      console.log("断开连接");
+    });
+    return () => {
+      client.close();
+    };
+  }, []);
+
   return (
     <div className={styles.root}>
       {/* 顶部导航栏 */}
