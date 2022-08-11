@@ -1,16 +1,18 @@
-import { Channel } from "@/types/data";
+import { ArticlePage, Channel } from "@/types/data";
 import { RootAction } from "@/types/store";
 
 type HomeState = {
   userChannels: Channel[];
   allChannels: Channel[];
   activeChannelId: number;
+  articleMap: Record<number, ArticlePage>;
 };
 
 const initState: HomeState = {
   userChannels: [],
   allChannels: [],
   activeChannelId: -1,
+  articleMap: {},
 };
 
 const homeReducer = (state = initState, action: RootAction): HomeState => {
@@ -30,6 +32,15 @@ const homeReducer = (state = initState, action: RootAction): HomeState => {
     return {
       ...state,
       activeChannelId: action.payload,
+    };
+  }
+  if (action.type === "home/set_channel_article") {
+    return {
+      ...state,
+      articleMap: {
+        ...state.articleMap,
+        [action.payload.channelId]: action.payload.data,
+      },
     };
   }
   return state;

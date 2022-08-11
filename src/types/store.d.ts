@@ -1,4 +1,4 @@
-import { User, Token, Profile, Channel } from "./data.d";
+import { User, Token, Profile, Channel, ArticlePage } from "./data.d";
 import store from "@/store";
 import { ThunkAction } from "redux-thunk";
 
@@ -32,6 +32,14 @@ export type HomeSetActiveChannelIdAction = {
   payload: number;
 };
 
+export type HomeSetChannelArticleAction = {
+  type: "home/set_channel_article";
+  payload: {
+    channelId: number;
+    data: ArticlePage;
+  };
+};
+
 // 所有 Action 汇总成的类型
 export type RootAction =
   | LoginSetTokenAction
@@ -39,7 +47,8 @@ export type RootAction =
   | ProfileSetProfileAction
   | HomeSetUserChannelsAction
   | HomeSetAllChannelsAction
-  | HomeSetActiveChannelIdAction;
+  | HomeSetActiveChannelIdAction
+  | HomeSetChannelArticleAction;
 
 export type RootState = ReturnType<typeof store.getState>;
 

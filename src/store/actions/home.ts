@@ -105,6 +105,12 @@ export const getArticles = (channel_id: number): RootThunkAction => {
       },
     });
     const articlePage = res.data.data;
-    console.log(articlePage);
+    dispatch({
+      type: "home/set_channel_article",
+      payload: {
+        channelId: channel_id,
+        data: articlePage,
+      },
+    } as RootAction);
   };
 };
