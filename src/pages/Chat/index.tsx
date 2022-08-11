@@ -79,6 +79,7 @@ const Chat = () => {
     return () => {
       client.close();
     };
+    // eslint-disable-next-line
   }, []);
 
   const chatListRef = useRef<HTMLDivElement>(null);
