@@ -1,9 +1,15 @@
-import classnames from 'classnames'
+import classnames from "classnames";
 
-import Icon from '@/components/Icon'
-import styles from './index.module.scss'
+import Icon from "@/components/Icon";
+import styles from "./index.module.scss";
+import { useSelector } from "react-redux";
+import { RootState } from "@/types/store";
+import { Channel } from "@/types/data";
 
 const Channels = () => {
+  const userChannels = useSelector<RootState, Channel[]>(
+    (state) => state.home.userChannels
+  );
   return (
     <div className={styles.root}>
       <div className="channel-header">
@@ -11,7 +17,7 @@ const Channels = () => {
       </div>
       <div className="channel-content">
         {/* 编辑时，添加类名 edit */}
-        <div className={classnames('channel-item')}>
+        <div className={classnames("channel-item")}>
           <div className="channel-item-header">
             <span className="channel-item-title">我的频道</span>
             <span className="channel-item-title-extra">点击进入频道</span>
@@ -19,10 +25,19 @@ const Channels = () => {
           </div>
           <div className="channel-list">
             {/* 选中时，添加类名 selected */}
-            <span className={classnames('channel-list-item')}>
+            {/* <span className={classnames("channel-list-item")}>
               推荐
               <Icon type="iconbtn_tag_close" />
-            </span>
+            </span> */}
+            {userChannels.map((channel) => (
+              <span
+                key={channel.id}
+                className={classnames("channel-list-item")}
+              >
+                {channel.name}
+                <Icon type="iconbtn_tag_close" />
+              </span>
+            ))}
           </div>
         </div>
 
@@ -37,7 +52,7 @@ const Channels = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Channels
+export default Channels;
