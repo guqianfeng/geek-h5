@@ -1,10 +1,12 @@
 import Icon from "@/components/Icon";
-import { Message } from "@/types/data";
+import { Message, Profile } from "@/types/data";
 import { NavBar, Input } from "antd-mobile";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "./index.module.scss";
 import classnames from "classnames";
+import { useSelector } from "react-redux";
+import { RootState } from "@/types/store";
 
 const Chat = () => {
   const history = useHistory();
@@ -13,6 +15,9 @@ const Chat = () => {
     { type: "robot", text: "亲爱的用户您好，小智同学为您服务。" },
     { type: "user", text: "你好" },
   ]);
+  const profile = useSelector<RootState, Profile>(
+    (state) => state.profile.profile
+  );
   return (
     <div className={styles.root}>
       {/* 顶部导航栏 */}
@@ -44,10 +49,7 @@ const Chat = () => {
             {msg.type === "robot" ? (
               <Icon type="iconbtn_xiaozhitongxue" />
             ) : (
-              <img
-                src={"http://toutiao.itheima.net/images/user_head.jpg"}
-                alt=""
-              />
+              <img src={profile.photo} alt="" />
             )}
             <div className="message">{msg.text}</div>
           </div>

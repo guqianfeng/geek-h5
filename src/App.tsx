@@ -39,8 +39,8 @@ export default function App() {
         ></Route> */}
         <AuthRoute path="/profile/edit" component={ProfileEdit}></AuthRoute>
         {/* 后端服务器问题先cv结构处理 */}
-        <Route path="/chat" component={Chat}></Route>
-        {/* <AuthRoute path="/chat" component={Chat}></AuthRoute> */}
+        {/* <Route path="/chat" component={Chat}></Route> */}
+        <AuthRoute path="/chat" component={Chat}></AuthRoute>
       </Switch>
     </div>
   );
