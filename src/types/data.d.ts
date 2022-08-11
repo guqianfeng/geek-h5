@@ -29,7 +29,12 @@ export interface Profile {
   birthday: string;
   intro?: any;
 }
-type Message = {
+export type Message = {
   type: "robot" | "user";
   text: string;
+};
+
+export type Channel = {
+  id: number;
+  name: string;
 };

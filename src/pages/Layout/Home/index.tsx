@@ -1,9 +1,16 @@
 import Icon from "@/components/Icon";
+import { getUserChennels } from "@/store/actions/home";
 import { Tabs } from "antd-mobile";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import styles from "./index.module.scss";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserChennels());
+  }, [dispatch]);
   return (
     <div className={styles.root}>
       {/* 频道 Tabs 列表 */}
