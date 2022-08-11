@@ -1,8 +1,10 @@
 import Icon from "@/components/Icon";
 import { getUserChennels } from "@/store/actions/home";
+import { Channel } from "@/types/data";
+import { RootState } from "@/types/store";
 import { Tabs } from "antd-mobile";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./index.module.scss";
 
@@ -11,11 +13,14 @@ const Home = () => {
   useEffect(() => {
     dispatch(getUserChennels());
   }, [dispatch]);
+  const userChannels = useSelector<RootState, Channel[]>(
+    (state) => state.home.userChannels
+  );
   return (
     <div className={styles.root}>
       {/* 频道 Tabs 列表 */}
       <Tabs className="tabs" activeLineMode="fixed">
-        <Tabs.Tab title="推荐" key="1">
+        {/* <Tabs.Tab title="推荐" key="1">
           推荐频道的内容
         </Tabs.Tab>
 
@@ -33,7 +38,12 @@ const Home = () => {
 
         <Tabs.Tab title="css" key="5">
           css频道的内容
-        </Tabs.Tab>
+        </Tabs.Tab> */}
+        {userChannels.map((channel) => (
+          <Tabs.Tab title={channel.name} key={channel.id}>
+            {channel.name}
+          </Tabs.Tab>
+        ))}
       </Tabs>
 
       <div className="tabs-opration">

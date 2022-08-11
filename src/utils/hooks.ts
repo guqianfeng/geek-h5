@@ -10,3 +10,10 @@ export const usePageEnter = (action: () => RootThunkAction) => {
   const state = useSelector<RootState, RootState>((state) => state);
   return state;
 };
+
+export const useMount = (callback: () => void) => {
+  useEffect(() => {
+    callback();
+    // eslint-disable-next-line
+  }, []);
+};
