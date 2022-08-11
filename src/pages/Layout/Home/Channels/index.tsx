@@ -2,8 +2,8 @@ import classnames from "classnames";
 
 import Icon from "@/components/Icon";
 import styles from "./index.module.scss";
-import { useSelector } from "react-redux";
-import { RootState } from "@/types/store";
+import { useDispatch, useSelector } from "react-redux";
+import { RootAction, RootState } from "@/types/store";
 import { Channel } from "@/types/data";
 import { differenceBy } from "lodash";
 
@@ -12,6 +12,7 @@ type ChannelsProps = {
 };
 
 const Channels = ({ onClose }: ChannelsProps) => {
+  const dispatch = useDispatch();
   const userChannels = useSelector<RootState, Channel[]>(
     (state) => state.home.userChannels
   );
@@ -53,6 +54,13 @@ const Channels = ({ onClose }: ChannelsProps) => {
                 className={classnames("channel-list-item", {
                   selected: activeChannelId === channel.id,
                 })}
+                onClick={() => {
+                  dispatch({
+                    type: "home/set_active_channel_id",
+                    payload: channel.id,
+                  } as RootAction);
+                  onClose?.();
+                }}
               >
                 {channel.name}
                 <Icon type="iconbtn_tag_close" />

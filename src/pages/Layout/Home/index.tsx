@@ -19,6 +19,9 @@ const Home = () => {
     (state) => state.home.userChannels
   );
   const [popupVisible, setPopupVisible] = useState(false);
+  const activeChannelId = useSelector<RootState, number>(
+    (state) => state.home.activeChannelId
+  );
   return (
     <div className={styles.root}>
       {/* 频道 Tabs 列表 */}
@@ -32,6 +35,7 @@ const Home = () => {
             payload: +value,
           } as RootAction);
         }}
+        activeKey={activeChannelId + ""}
       >
         {/* <Tabs.Tab title="推荐" key="1">
           推荐频道的内容
