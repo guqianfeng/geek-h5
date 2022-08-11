@@ -1,8 +1,19 @@
-import ArticleItem from '../ArticleItem'
+import { getArticles } from "@/store/actions/home";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import ArticleItem from "../ArticleItem";
 
-import styles from './index.module.scss'
+import styles from "./index.module.scss";
 
-const ArticleList = () => {
+type ArticleListProps = {
+  channelId: number;
+};
+
+const ArticleList = ({ channelId }: ArticleListProps) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getArticles(channelId));
+  }, [dispatch, channelId]);
   return (
     <div className={styles.root}>
       {/* 文章列表中的每一项 */}
@@ -10,7 +21,7 @@ const ArticleList = () => {
         <ArticleItem />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ArticleList
+export default ArticleList;

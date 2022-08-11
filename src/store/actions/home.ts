@@ -1,4 +1,4 @@
-import { ApiResponse, Channel } from "@/types/data";
+import { ApiResponse, ArticlePage, Channel } from "@/types/data";
 import { RootAction, RootThunkAction } from "@/types/store";
 import { getLocalChannels, setLocalChannels } from "@/utils/channel";
 import http from "@/utils/request";
@@ -93,5 +93,18 @@ export const deleteMyChannel = (id: number): RootThunkAction => {
       setLocalChannels(result);
     }
     dispatch(getUserChennels());
+  };
+};
+
+export const getArticles = (channel_id: number): RootThunkAction => {
+  return async (dispatch) => {
+    const res = await http.get<ApiResponse<ArticlePage>>(`/articles`, {
+      params: {
+        channel_id,
+        timestamp: +Date.now(),
+      },
+    });
+    const articlePage = res.data.data;
+    console.log(articlePage);
   };
 };

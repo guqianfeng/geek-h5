@@ -36,7 +36,7 @@ const Home = () => {
         className="tabs"
         activeLineMode="fixed"
         onChange={(value) => {
-          console.log(value);
+          // console.log(value);
           dispatch({
             type: "home/set_active_channel_id",
             payload: +value,
@@ -65,7 +65,7 @@ const Home = () => {
         </Tabs.Tab> */}
         {userChannels.map((channel) => (
           <Tabs.Tab title={channel.name} key={channel.id}>
-            <ArticleList />
+            <ArticleList channelId={channel.id} />
           </Tabs.Tab>
         ))}
       </Tabs>

@@ -38,3 +38,24 @@ export type Channel = {
   id: number;
   name: string;
 };
+
+interface ArticlePage {
+  results: Article[];
+  pre_timestamp: string;
+}
+
+interface Article {
+  art_id: string;
+  title: string;
+  aut_id: string;
+  comm_count: number;
+  pubdate: string;
+  aut_name: string;
+  is_top: number;
+  cover: Cover;
+}
+
+interface Cover {
+  type: number;
+  images?: string[];
+}
