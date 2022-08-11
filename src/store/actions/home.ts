@@ -89,7 +89,7 @@ export const deleteMyChannel = (id: number): RootThunkAction => {
       await http.delete(`/user/channels/${id}`);
     } else {
       const userChannels = getLocalChannels();
-      const result = userChannels.filter((item) => item.id != id);
+      const result = userChannels.filter((item) => item.id !== id);
       setLocalChannels(result);
     }
     dispatch(getUserChennels());

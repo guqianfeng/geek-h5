@@ -22,6 +22,12 @@ const Home = () => {
   const activeChannelId = useSelector<RootState, number>(
     (state) => state.home.activeChannelId
   );
+  useEffect(() => {
+    dispatch({
+      type: "home/set_active_channel_id",
+      payload: userChannels[0]?.id,
+    } as RootAction);
+  }, [dispatch, userChannels]);
   return (
     <div className={styles.root}>
       {/* 频道 Tabs 列表 */}
