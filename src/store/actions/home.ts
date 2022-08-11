@@ -75,9 +75,23 @@ export const addMyChannel = (channel: Channel): RootThunkAction => {
     } else {
       setLocalChannels([...userChannels, channel]);
     }
-    dispatch({
-      type: "home/set_user_channels",
-      payload: [...userChannels, channel],
-    } as RootAction);
+    // dispatch({
+    //   type: "home/set_user_channels",
+    //   payload: [...userChannels, channel],
+    // } as RootAction);
+    dispatch(getUserChennels());
+  };
+};
+
+export const deleteMyChannel = (id: number): RootThunkAction => {
+  return async (dispatch) => {
+    if (hasToken()) {
+      await http.delete(`/user/channels/${id}`);
+    } else {
+      const userChannels = getLocalChannels();
+      const result = userChannels.filter((item) => item.id != id);
+      setLocalChannels(result);
+    }
+    dispatch(getUserChennels());
   };
 };

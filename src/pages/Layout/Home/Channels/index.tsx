@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootAction, RootState } from "@/types/store";
 import { Channel } from "@/types/data";
 import { differenceBy } from "lodash";
-import { addMyChannel } from "@/store/actions/home";
+import { addMyChannel, deleteMyChannel } from "@/store/actions/home";
 import { useState } from "react";
+import { Toast } from "antd-mobile";
 
 type ChannelsProps = {
   onClose?: () => void;
@@ -82,6 +83,21 @@ const Channels = ({ onClose }: ChannelsProps) => {
                     // console.log(e);
                     // e.stopPropagation();
                     // e.preventDefault();
+                    if (userChannels.length > 4) {
+                      dispatch(deleteMyChannel(channel.id));
+                      if (channel.id === activeChannelId) {
+                        const nowActiveId = userChannels[0].id;
+                        dispatch({
+                          type: "home/set_active_channel_id",
+                          payload: nowActiveId,
+                        } as RootAction);
+                      }
+                    } else {
+                      Toast.show({
+                        content: "亲～不能删除小于4个哦～～",
+                      });
+                      return;
+                    }
                   }}
                 />
               </span>
