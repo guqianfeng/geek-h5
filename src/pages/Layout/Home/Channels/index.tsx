@@ -5,6 +5,7 @@ import styles from "./index.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "@/types/store";
 import { Channel } from "@/types/data";
+import { differenceBy } from "lodash";
 
 type ChannelsProps = {
   onClose?: () => void;
@@ -18,11 +19,12 @@ const Channels = ({ onClose }: ChannelsProps) => {
     (state) => state.home.allChannels
   );
   // console.log({ userChannels, allChannels });
-  const recommandChannels = allChannels.filter((item) => {
-    const channel = userChannels.find((userCh) => userCh.id === item.id);
-    return !channel;
-  });
+  // const recommandChannels = allChannels.filter((item) => {
+  //   const channel = userChannels.find((userCh) => userCh.id === item.id);
+  //   return !channel;
+  // });
   // console.log(recommandChannels);
+  const recommandChannels = differenceBy(allChannels, userChannels, "id");
   return (
     <div className={styles.root}>
       <div className="channel-header">
