@@ -43,3 +43,41 @@ export const getAllChannels = (): RootThunkAction => {
     } as RootAction);
   };
 };
+
+export const addMyChannel = (channel: Channel): RootThunkAction => {
+  return async (dispatch, getState) => {
+    //   if (hasToken()) {
+    //     await http.patch(`/user/channels`, {
+    //       channels: [
+    //         {
+    //           id: channel.id,
+    //         },
+    //       ],
+    //     });
+    //     dispatch(getUserChennels());
+    //   } else {
+    //     const localChannels = getLocalChannels();
+    //     localChannels.push(channel);
+    //     dispatch({
+    //       type: "home/set_user_channels",
+    //       payload: localChannels,
+    //     } as RootAction);
+    //   }
+    const { userChannels } = getState().home;
+    if (hasToken()) {
+      await http.patch("/user/channels", {
+        channels: [
+          {
+            id: channel.id,
+          },
+        ],
+      });
+    } else {
+      setLocalChannels([...userChannels, channel]);
+    }
+    dispatch({
+      type: "home/set_user_channels",
+      payload: [...userChannels, channel],
+    } as RootAction);
+  };
+};

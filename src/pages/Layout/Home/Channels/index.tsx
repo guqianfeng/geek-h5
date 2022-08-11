@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootAction, RootState } from "@/types/store";
 import { Channel } from "@/types/data";
 import { differenceBy } from "lodash";
+import { addMyChannel } from "@/store/actions/home";
 
 type ChannelsProps = {
   onClose?: () => void;
@@ -76,7 +77,14 @@ const Channels = ({ onClose }: ChannelsProps) => {
           </div>
           <div className="channel-list">
             {recommandChannels.map((item) => (
-              <span key={item.id} className="channel-list-item">
+              <span
+                onClick={() => {
+                  console.log("添加我的频道", item);
+                  dispatch(addMyChannel(item));
+                }}
+                key={item.id}
+                className="channel-list-item"
+              >
                 + {item.name}
               </span>
             ))}
