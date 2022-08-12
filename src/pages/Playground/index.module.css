@@ -25,3 +25,7 @@
 .test-div:nth-child(2) {
   border: 1px solid var(--test-color);
 }
+.test-img-div {
+  background: pink;
+  height: 2000px;
+}
