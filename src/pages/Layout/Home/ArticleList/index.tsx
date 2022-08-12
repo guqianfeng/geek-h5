@@ -1,7 +1,7 @@
 import { getArticles } from "@/store/actions/home";
 import { ArticlePage } from "@/types/data";
 import { RootState } from "@/types/store";
-import { InfiniteScroll } from "antd-mobile";
+import { InfiniteScroll, PullToRefresh } from "antd-mobile";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ArticleItem from "../ArticleItem";
@@ -31,17 +31,23 @@ const ArticleList = ({ channelId }: ArticleListProps) => {
         }
       }}
     >
-      {articlePage?.results?.map((item) => (
-        <div className="article-item" key={item.art_id}>
-          <ArticleItem article={item} type={item.cover.type} />
-        </div>
-      ))}
-      <InfiniteScroll
-        hasMore={!!articlePage?.pre_timestamp}
-        loadMore={async () => {
-          await dispatch(getArticles(channelId, +articlePage?.pre_timestamp));
+      <PullToRefresh
+        onRefresh={async () => {
+          await dispatch(getArticles(channelId));
         }}
-      ></InfiniteScroll>
+      >
+        {articlePage?.results?.map((item) => (
+          <div className="article-item" key={item.art_id}>
+            <ArticleItem article={item} type={item.cover.type} />
+          </div>
+        ))}
+        <InfiniteScroll
+          hasMore={!!articlePage?.pre_timestamp}
+          loadMore={async () => {
+            await dispatch(getArticles(channelId, +articlePage?.pre_timestamp));
+          }}
+        ></InfiniteScroll>
+      </PullToRefresh>
     </div>
   );
 };

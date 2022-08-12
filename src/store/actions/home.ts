@@ -98,13 +98,13 @@ export const deleteMyChannel = (id: number): RootThunkAction => {
 
 export const getArticles = (
   channel_id: number,
-  timestamp: number = +Date.now()
+  timestamp?: number
 ): RootThunkAction => {
   return async (dispatch, getState) => {
     const res = await http.get<ApiResponse<ArticlePage>>(`/articles`, {
       params: {
         channel_id,
-        timestamp,
+        timestamp: timestamp || +new Date(),
       },
     });
     // 老数据
@@ -116,7 +116,9 @@ export const getArticles = (
       payload: {
         channelId: channel_id,
         data: {
-          results: [...(oldDate?.results || []), ...articlePage.results],
+          results: timestamp
+            ? [...(oldDate?.results || []), ...articlePage.results]
+            : articlePage.results,
           pre_timestamp: articlePage.pre_timestamp,
         },
       },
