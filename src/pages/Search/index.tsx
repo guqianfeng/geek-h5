@@ -21,7 +21,7 @@ const SearchPage = () => {
     (keyword: string) => {
       // console.log(keyword);
       setKeyword(keyword);
-      dispatch(getSearchSuggestion(keyword));
+      keyword && dispatch(getSearchSuggestion(keyword));
     },
     {
       wait: 300,
@@ -47,31 +47,29 @@ const SearchPage = () => {
         <SearchBar placeholder="请输入关键字搜索" onChange={onKeywordChange} />
       </NavBar>
 
-      {true && (
-        <div
-          className="history"
-          style={{
-            display: true ? "none" : "block",
-          }}
-        >
-          <div className="history-header">
-            <span>搜索历史</span>
-            <span>
-              <Icon type="iconbtn_del" />
-              清除全部
-            </span>
-          </div>
-
-          <div className="history-list">
-            <span className="history-item">
-              <span className="text-overflow">黑马程序员</span>
-              <Icon type="iconbtn_essay_close" />
-            </span>
-          </div>
+      <div
+        className="history"
+        style={{
+          display: keyword ? "none" : "block",
+        }}
+      >
+        <div className="history-header">
+          <span>搜索历史</span>
+          <span>
+            <Icon type="iconbtn_del" />
+            清除全部
+          </span>
         </div>
-      )}
 
-      <div className={classnames("search-result", true ? "show" : "")}>
+        <div className="history-list">
+          <span className="history-item">
+            <span className="text-overflow">黑马程序员</span>
+            <Icon type="iconbtn_essay_close" />
+          </span>
+        </div>
+      </div>
+
+      <div className={classnames("search-result", keyword ? "show" : "")}>
         {suggestion.options.map((item, index) => (
           <div className="result-item" key={index}>
             <Icon className="icon-search" type="iconbtn_search" />
