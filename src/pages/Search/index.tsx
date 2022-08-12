@@ -4,21 +4,25 @@ import { NavBar, SearchBar } from "antd-mobile";
 
 import Icon from "@/components/Icon";
 import styles from "./index.module.scss";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useDebounceFn } from "ahooks";
+import { useDispatch } from "react-redux";
+import { getSearchSuggestion } from "@/store/actions/search";
 const SearchPage = () => {
   const history = useHistory();
-  const [keyword, setKeyword] = useState("");
-  const { run, flush } = useDebounceFn(
+  const dispatch = useDispatch();
+  const [, setKeyword] = useState("");
+  const { run } = useDebounceFn(
     (keyword: string) => {
-      console.log(keyword);
+      // console.log(keyword);
       setKeyword(keyword);
+      dispatch(getSearchSuggestion(keyword));
     },
     {
       wait: 300,
     }
   );
-  const timerRef = useRef(-1);
+  // const timerRef = useRef(-1);
   const onKeywordChange = (keyword: string) => {
     // clearTimeout(timerRef.current);
     // timerRef.current = window.setTimeout(() => {

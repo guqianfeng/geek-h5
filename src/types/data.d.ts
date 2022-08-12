@@ -59,3 +59,6 @@ export interface Cover {
   type: 0 | 1 | 3;
   images?: string[];
 }
+export interface Suggestion {
+  options: string[];
+}
