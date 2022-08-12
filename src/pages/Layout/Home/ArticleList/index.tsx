@@ -4,6 +4,7 @@ import { RootState } from "@/types/store";
 import { InfiniteScroll, PullToRefresh } from "antd-mobile";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import ArticleItem from "../ArticleItem";
 
 import styles from "./index.module.scss";
@@ -14,6 +15,7 @@ type ArticleListProps = {
 
 const ArticleList = ({ channelId }: ArticleListProps) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     dispatch(getArticles(channelId));
   }, [dispatch, channelId]);
@@ -38,7 +40,13 @@ const ArticleList = ({ channelId }: ArticleListProps) => {
       >
         {articlePage?.results?.map((item) => (
           <div className="article-item" key={item.art_id}>
-            <ArticleItem article={item} type={item.cover.type} />
+            <ArticleItem
+              article={item}
+              type={item.cover.type}
+              onClick={() => {
+                history.push(`/article/${item.art_id}`);
+              }}
+            />
           </div>
         ))}
         <InfiniteScroll

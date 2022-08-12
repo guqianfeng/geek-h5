@@ -21,11 +21,12 @@ type Props = {
    * 3 表示三图
    */
   type?: 0 | 1 | 3;
+  onClick?: () => void;
 };
 
-const ArticleItem = ({ article, type = 0 }: Props) => {
+const ArticleItem = ({ article, onClick, type = 0 }: Props) => {
   return (
-    <div className={styles.root}>
+    <div className={styles.root} onClick={onClick}>
       <div
         className={classnames(
           "article-content",
