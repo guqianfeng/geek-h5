@@ -5,6 +5,7 @@ import { RootAction, RootState } from "@/types/store";
 import { Popup, Tabs } from "antd-mobile";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import ArticleList from "./ArticleList";
 import Channels from "./Channels";
 
@@ -12,6 +13,7 @@ import styles from "./index.module.scss";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     dispatch(getUserChennels());
     dispatch(getAllChannels());
@@ -71,7 +73,12 @@ const Home = () => {
       </Tabs>
 
       <div className="tabs-opration">
-        <Icon type="iconbtn_search" />
+        <Icon
+          type="iconbtn_search"
+          onClick={() => {
+            history.push("/search");
+          }}
+        />
         <Icon
           type="iconbtn_channel"
           onClick={() => {
