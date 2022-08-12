@@ -8,6 +8,7 @@ import { Article } from "@/types/data";
 import dayjs from "dayjs";
 import releativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
+import Image from "../Img";
 
 dayjs.locale("zh-cn");
 dayjs.extend(releativeTime);
@@ -37,7 +38,8 @@ const ArticleItem = ({ article, type = 0 }: Props) => {
           <div className="article-imgs">
             {article.cover?.images?.map((item, index) => (
               <div className="article-img-wrapper" key={index}>
-                <img src={item} alt="" />
+                {/* <img src={item} alt="" /> */}
+                <Image src={item} />
               </div>
             ))}
           </div>
