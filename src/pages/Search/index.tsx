@@ -6,11 +6,16 @@ import Icon from "@/components/Icon";
 import styles from "./index.module.scss";
 import { useState } from "react";
 import { useDebounceFn } from "ahooks";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getSearchSuggestion } from "@/store/actions/search";
+import { RootState } from "@/types/store";
+import { Suggestion } from "@/types/data";
 const SearchPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const suggestion = useSelector<RootState, Suggestion>(
+    (state) => state.search.suggestion
+  );
   const [, setKeyword] = useState("");
   const { run } = useDebounceFn(
     (keyword: string) => {
@@ -67,13 +72,16 @@ const SearchPage = () => {
       )}
 
       <div className={classnames("search-result", true ? "show" : "")}>
-        <div className="result-item">
-          <Icon className="icon-search" type="iconbtn_search" />
-          <div className="result-value text-overflow">
-            <span>黑马</span>
-            程序员
+        {suggestion.options.map((item, index) => (
+          <div className="result-item" key={index}>
+            <Icon className="icon-search" type="iconbtn_search" />
+            <div className="result-value text-overflow">
+              {/* <span>黑马</span>
+              程序员 */}
+              <span>{item}</span>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
