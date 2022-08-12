@@ -16,7 +16,7 @@ const SearchPage = () => {
   const suggestion = useSelector<RootState, Suggestion>(
     (state) => state.search.suggestion
   );
-  const [, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState("");
   const { run } = useDebounceFn(
     (keyword: string) => {
       // console.log(keyword);
@@ -75,10 +75,21 @@ const SearchPage = () => {
         {suggestion.options.map((item, index) => (
           <div className="result-item" key={index}>
             <Icon className="icon-search" type="iconbtn_search" />
-            <div className="result-value text-overflow">
+            <div
+              className="result-value text-overflow"
+              dangerouslySetInnerHTML={{
+                __html: item.replace(
+                  new RegExp(`${keyword}`, "gi"),
+                  `<span>${keyword}</span>`
+                ),
+              }}
+            >
               {/* <span>黑马</span>
               程序员 */}
-              <span>{item}</span>
+              {/* {item.replace(
+                new RegExp(`${keyword}`, "gi"),
+                `<span>${keyword}</span>`
+              )} */}
             </div>
           </div>
         ))}
