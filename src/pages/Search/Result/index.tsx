@@ -19,7 +19,8 @@ const Result = () => {
   const usp = new URLSearchParams(search);
   const q = usp.get("q");
   useMount(() => {
-    q && dispatch(getSearchResult(q));
+    // console.log(searchResult.page);
+    searchResult.page === undefined && q && dispatch(getSearchResult(q));
   });
 
   return (
@@ -28,14 +29,20 @@ const Result = () => {
       <div className="article-list">
         {searchResult?.results?.map((item) => (
           <div className="article-item" key={item.art_id}>
-            <ArticleItem type={item.cover.type} article={item} />
+            <ArticleItem
+              type={item.cover.type}
+              article={item}
+              onClick={() => {
+                history.push(`/article/${item.art_id}`);
+              }}
+            />
           </div>
         ))}
         <InfiniteScroll
           hasMore={searchResult.page < 5}
           // hasMore={searchResult?.results?.length <= searchResult?.total_count}
           loadMore={async () => {
-            console.log(searchResult.page);
+            // console.log(searchResult.page);
             await dispatch(getSearchResult(q!, +searchResult.page + 1));
           }}
         ></InfiniteScroll>

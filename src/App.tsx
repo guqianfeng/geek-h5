@@ -9,6 +9,7 @@ import AuthRoute from "./components/auth-route";
 import Chat from "./pages/Chat";
 import SearchPage from "./pages/Search";
 import Result from "./pages/Search/Result";
+import Article from "./pages/Article";
 
 export default function App() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
         <AuthRoute path="/chat" component={Chat}></AuthRoute>
         <Route path="/search" component={SearchPage} exact></Route>
         <Route path="/search/result" component={Result}></Route>
+        <Route path="/article/:id" component={Article}></Route>
       </Switch>
     </div>
   );
