@@ -36,7 +36,7 @@ export const getSearchResult = (
   page = 1,
   per_page = 10
 ): RootThunkAction => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     const res = await http.get<ApiResponse<SearchResult>>(`/search`, {
       params: {
         q,
@@ -45,9 +45,15 @@ export const getSearchResult = (
       },
     });
     // console.log(res.data.data);
+    const oldResult = getState().search.searchResult;
+    const newResult = res.data.data;
+    // console.log({ oldResult, newResult });
     dispatch({
       type: "search/set_search_result",
-      payload: res.data.data,
+      payload: {
+        ...newResult,
+        results: [...(oldResult?.results || []), ...newResult.results],
+      },
     } as RootAction);
   };
 };

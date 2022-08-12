@@ -1,5 +1,5 @@
 import { useHistory, useLocation } from "react-router-dom";
-import { NavBar } from "antd-mobile";
+import { InfiniteScroll, NavBar } from "antd-mobile";
 
 import styles from "./index.module.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,10 +16,9 @@ const Result = () => {
   const searchResult = useSelector<RootState, SearchResult>(
     (state) => state.search.searchResult
   );
+  const usp = new URLSearchParams(search);
+  const q = usp.get("q");
   useMount(() => {
-    const usp = new URLSearchParams(search);
-    console.log(usp.get("q"));
-    const q = usp.get("q");
     q && dispatch(getSearchResult(q));
   });
 
@@ -28,10 +27,18 @@ const Result = () => {
       <NavBar onBack={() => history.go(-1)}>搜索结果</NavBar>
       <div className="article-list">
         {searchResult?.results?.map((item) => (
-          <div className="article-item">
+          <div className="article-item" key={item.art_id}>
             <ArticleItem type={item.cover.type} article={item} />
           </div>
         ))}
+        <InfiniteScroll
+          hasMore={searchResult.page < 5}
+          // hasMore={searchResult?.results?.length <= searchResult?.total_count}
+          loadMore={async () => {
+            console.log(searchResult.page);
+            await dispatch(getSearchResult(q!, +searchResult.page + 1));
+          }}
+        ></InfiniteScroll>
       </div>
     </div>
   );
