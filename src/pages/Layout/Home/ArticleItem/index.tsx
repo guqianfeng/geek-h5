@@ -3,7 +3,7 @@ import classnames from "classnames";
 import Icon from "@/components/Icon";
 
 import styles from "./index.module.scss";
-import { Article } from "@/types/data";
+import { Article, SearchItem } from "@/types/data";
 
 import dayjs from "dayjs";
 import releativeTime from "dayjs/plugin/relativeTime";
@@ -14,7 +14,7 @@ dayjs.locale("zh-cn");
 dayjs.extend(releativeTime);
 
 type Props = {
-  article: Article;
+  article: Article | SearchItem;
   /**
    * 0 表示无图
    * 1 表示单图
