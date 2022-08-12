@@ -1,12 +1,21 @@
-import classnames from 'classnames'
-import { useHistory } from 'react-router'
-import { NavBar, SearchBar } from 'antd-mobile'
+import classnames from "classnames";
+import { useHistory } from "react-router";
+import { NavBar, SearchBar } from "antd-mobile";
 
-import Icon from '@/components/Icon'
-import styles from './index.module.scss'
+import Icon from "@/components/Icon";
+import styles from "./index.module.scss";
+import { useRef, useState } from "react";
 
 const SearchPage = () => {
-  const history = useHistory()
+  const history = useHistory();
+  const [keyword, setKeyword] = useState("");
+  const timerRef = useRef(-1);
+  const onKeywordChange = (keyword: string) => {
+    clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => {
+      setKeyword(keyword);
+    }, 300);
+  };
 
   return (
     <div className={styles.root}>
@@ -15,14 +24,14 @@ const SearchPage = () => {
         onBack={() => history.go(-1)}
         right={<span className="search-text">搜索</span>}
       >
-        <SearchBar placeholder="请输入关键字搜索" />
+        <SearchBar placeholder="请输入关键字搜索" onChange={onKeywordChange} />
       </NavBar>
 
       {true && (
         <div
           className="history"
           style={{
-            display: true ? 'none' : 'block'
+            display: true ? "none" : "block",
           }}
         >
           <div className="history-header">
@@ -42,7 +51,7 @@ const SearchPage = () => {
         </div>
       )}
 
-      <div className={classnames('search-result', true ? 'show' : '')}>
+      <div className={classnames("search-result", true ? "show" : "")}>
         <div className="result-item">
           <Icon className="icon-search" type="iconbtn_search" />
           <div className="result-value text-overflow">
@@ -52,7 +61,7 @@ const SearchPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SearchPage
+export default SearchPage;
