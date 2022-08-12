@@ -64,3 +64,22 @@ export interface Suggestion {
 }
 
 export type History = string[];
+
+export interface SearchResult {
+  page: number;
+  per_page: number;
+  results: SearchItem[];
+  total_count: number;
+}
+
+export interface SearchItem {
+  art_id: string;
+  title: string;
+  aut_id: string;
+  aut_name: string;
+  comm_count: number;
+  pubdate: string;
+  cover: Cover;
+  like_count: number;
+  collect_count: number;
+}

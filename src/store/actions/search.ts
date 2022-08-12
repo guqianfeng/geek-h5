@@ -1,4 +1,4 @@
-import { ApiResponse, Suggestion } from "@/types/data";
+import { ApiResponse, SearchResult, Suggestion } from "@/types/data";
 import { RootAction, RootThunkAction } from "@/types/store";
 import { setLocalHistories } from "@/utils/keyword-history";
 import http from "@/utils/request";
@@ -27,6 +27,27 @@ export const getSearchSuggestion = (q: string): RootThunkAction => {
     dispatch({
       type: "search/set_history",
       payload: resultArr,
+    } as RootAction);
+  };
+};
+
+export const getSearchResult = (
+  q: string,
+  page = 1,
+  per_page = 10
+): RootThunkAction => {
+  return async (dispatch) => {
+    const res = await http.get<ApiResponse<SearchResult>>(`/search`, {
+      params: {
+        q,
+        page,
+        per_page,
+      },
+    });
+    // console.log(res.data.data);
+    dispatch({
+      type: "search/set_search_result",
+      payload: res.data.data,
     } as RootAction);
   };
 };
