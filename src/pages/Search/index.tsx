@@ -8,8 +8,9 @@ import { useState } from "react";
 import { useDebounceFn } from "ahooks";
 import { useDispatch, useSelector } from "react-redux";
 import { getSearchSuggestion } from "@/store/actions/search";
-import { RootState } from "@/types/store";
+import { RootAction, RootState } from "@/types/store";
 import { History, Suggestion } from "@/types/data";
+import { removeLocalHistories } from "@/utils/keyword-history";
 const SearchPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -59,7 +60,17 @@ const SearchPage = () => {
         <div className="history-header">
           <span>搜索历史</span>
           <span>
-            <Icon type="iconbtn_del" />
+            <Icon
+              type="iconbtn_del"
+              onClick={() => {
+                console.log("clear");
+                removeLocalHistories();
+                dispatch({
+                  type: "search/set_history",
+                  payload: [],
+                } as RootAction);
+              }}
+            />
             清除全部
           </span>
         </div>
