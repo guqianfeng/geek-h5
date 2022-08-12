@@ -96,20 +96,29 @@ export const deleteMyChannel = (id: number): RootThunkAction => {
   };
 };
 
-export const getArticles = (channel_id: number): RootThunkAction => {
-  return async (dispatch) => {
+export const getArticles = (
+  channel_id: number,
+  timestamp: number = +Date.now()
+): RootThunkAction => {
+  return async (dispatch, getState) => {
     const res = await http.get<ApiResponse<ArticlePage>>(`/articles`, {
       params: {
         channel_id,
-        timestamp: +Date.now(),
+        timestamp,
       },
     });
+    // 老数据
+    const oldDate = getState().home.articleMap[channel_id];
+    // 新数据
     const articlePage = res.data.data;
     dispatch({
       type: "home/set_channel_article",
       payload: {
         channelId: channel_id,
-        data: articlePage,
+        data: {
+          results: [...(oldDate?.results || []), ...articlePage.results],
+          pre_timestamp: articlePage.pre_timestamp,
+        },
       },
     } as RootAction);
   };

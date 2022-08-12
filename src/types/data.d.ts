@@ -39,12 +39,12 @@ export type Channel = {
   name: string;
 };
 
-interface ArticlePage {
+export interface ArticlePage {
   results: Article[];
   pre_timestamp: string;
 }
 
-interface Article {
+export interface Article {
   art_id: string;
   title: string;
   aut_id: string;
@@ -55,7 +55,7 @@ interface Article {
   cover: Cover;
 }
 
-interface Cover {
+export interface Cover {
   type: 0 | 1 | 3;
   images?: string[];
 }
