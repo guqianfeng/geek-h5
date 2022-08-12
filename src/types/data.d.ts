@@ -62,3 +62,5 @@ export interface Cover {
 export interface Suggestion {
   options: string[];
 }
+
+export type History = string[];

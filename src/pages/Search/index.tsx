@@ -76,7 +76,7 @@ const SearchPage = () => {
             <div
               className="result-value text-overflow"
               dangerouslySetInnerHTML={{
-                __html: item.replace(
+                __html: item?.replace(
                   new RegExp(`${keyword}`, "gi"),
                   `<span>${keyword}</span>`
                 ),
