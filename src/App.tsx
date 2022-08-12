@@ -8,6 +8,7 @@ import Playground from "./pages/Playground";
 import AuthRoute from "./components/auth-route";
 import Chat from "./pages/Chat";
 import SearchPage from "./pages/Search";
+import Result from "./pages/Search/Result";
 
 export default function App() {
   return (
@@ -42,7 +43,8 @@ export default function App() {
         {/* 后端服务器问题先cv结构处理 */}
         {/* <Route path="/chat" component={Chat}></Route> */}
         <AuthRoute path="/chat" component={Chat}></AuthRoute>
-        <Route path="/search" component={SearchPage}></Route>
+        <Route path="/search" component={SearchPage} exact></Route>
+        <Route path="/search/result" component={Result}></Route>
       </Switch>
     </div>
   );

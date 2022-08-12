@@ -46,7 +46,16 @@ const SearchPage = () => {
       <NavBar
         className="navbar"
         onBack={() => history.go(-1)}
-        right={<span className="search-text">搜索</span>}
+        right={
+          <span
+            className="search-text"
+            onClick={() => {
+              history.push(`/search/result?q=${keyword}`);
+            }}
+          >
+            搜索
+          </span>
+        }
       >
         <SearchBar placeholder="请输入关键字搜索" onChange={onKeywordChange} />
       </NavBar>
