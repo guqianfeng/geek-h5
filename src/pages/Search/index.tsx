@@ -9,12 +9,15 @@ import { useDebounceFn } from "ahooks";
 import { useDispatch, useSelector } from "react-redux";
 import { getSearchSuggestion } from "@/store/actions/search";
 import { RootState } from "@/types/store";
-import { Suggestion } from "@/types/data";
+import { History, Suggestion } from "@/types/data";
 const SearchPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const suggestion = useSelector<RootState, Suggestion>(
     (state) => state.search.suggestion
+  );
+  const keywordsHistory = useSelector<RootState, History>(
+    (state) => state.search.history
   );
   const [keyword, setKeyword] = useState("");
   const { run } = useDebounceFn(
@@ -62,10 +65,12 @@ const SearchPage = () => {
         </div>
 
         <div className="history-list">
-          <span className="history-item">
-            <span className="text-overflow">黑马程序员</span>
-            <Icon type="iconbtn_essay_close" />
-          </span>
+          {keywordsHistory.map((item, index) => (
+            <span className="history-item" key={index}>
+              <span className="text-overflow">{item}</span>
+              <Icon type="iconbtn_essay_close" />
+            </span>
+          ))}
         </div>
       </div>
 

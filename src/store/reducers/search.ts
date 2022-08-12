@@ -1,5 +1,6 @@
 import { Suggestion, History } from "@/types/data";
 import { RootAction } from "@/types/store";
+import { getLocalHistories } from "@/utils/keyword-history";
 
 type SearchState = {
   suggestion: Suggestion;
@@ -9,7 +10,7 @@ const initialState: SearchState = {
   suggestion: {
     options: [] as string[],
   },
-  history: [],
+  history: getLocalHistories(),
 };
 const searchReducer = (state = initialState, action: RootAction) => {
   if (action.type === "search/set_suggestion") {
