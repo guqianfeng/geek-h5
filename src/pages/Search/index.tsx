@@ -5,16 +5,27 @@ import { NavBar, SearchBar } from "antd-mobile";
 import Icon from "@/components/Icon";
 import styles from "./index.module.scss";
 import { useRef, useState } from "react";
-
+import { useDebounceFn } from "ahooks";
 const SearchPage = () => {
   const history = useHistory();
   const [keyword, setKeyword] = useState("");
+  const { run, flush } = useDebounceFn(
+    (keyword: string) => {
+      console.log(keyword);
+      setKeyword(keyword);
+    },
+    {
+      wait: 300,
+    }
+  );
   const timerRef = useRef(-1);
   const onKeywordChange = (keyword: string) => {
-    clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(() => {
-      setKeyword(keyword);
-    }, 300);
+    // clearTimeout(timerRef.current);
+    // timerRef.current = window.setTimeout(() => {
+    //   setKeyword(keyword);
+    // }, 300);
+    run(keyword);
+    // flush();
   };
 
   return (
