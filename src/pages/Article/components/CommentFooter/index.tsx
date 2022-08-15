@@ -8,13 +8,14 @@ import { useDispatch } from "react-redux";
 import styles from "./index.module.scss";
 
 type Props = {
+  detail: ArticleDetail;
   // normal 普通评论
   // reply 回复评论
   type?: "normal" | "reply";
-  detail: ArticleDetail;
+  onCommentClick?: () => void;
 };
 
-const CommentFooter = ({ type = "normal", detail }: Props) => {
+const CommentFooter = ({ type = "normal", detail, onCommentClick }: Props) => {
   const dispatch = useDispatch();
   return (
     <div className={styles.root}>
@@ -25,7 +26,7 @@ const CommentFooter = ({ type = "normal", detail }: Props) => {
 
       {type === "normal" && (
         <>
-          <div className="action-item">
+          <div className="action-item" onClick={onCommentClick}>
             <Icon type="iconbtn_comment" />
             <p>评论</p>
             {!!detail.comm_count && (

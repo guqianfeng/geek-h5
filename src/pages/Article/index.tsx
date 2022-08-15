@@ -19,6 +19,7 @@ import { ArticleDetail, CommentPage } from "@/types/data";
 import Dompurify from "dompurify";
 import hljs from "highlight.js";
 import "highlight.js/styles/base16/default-dark.css";
+import { useRef } from "react";
 
 const Article = () => {
   const history = useHistory();
@@ -54,10 +55,13 @@ const Article = () => {
     (state) => state.article.commentPage
   );
 
+  const wrapperDomRef = useRef<HTMLDivElement>(null);
+  const commentDomRef = useRef<HTMLDivElement>(null);
+
   const renderArticle = () => {
     // 文章详情
     return (
-      <div className="wrapper">
+      <div className="wrapper" ref={wrapperDomRef}>
         <div className="article-wrapper">
           <div className="header">
             <h1 className="title">{articleDetail.title}</h1>
@@ -98,7 +102,7 @@ const Article = () => {
           </div>
         </div>
 
-        <div className="comment">
+        <div className="comment" ref={commentDomRef}>
           <div className="comment-header">
             <span>全部评论（{articleDetail.comm_count}）</span>
             <span>{articleDetail.like_count} 点赞</span>
@@ -157,7 +161,23 @@ const Article = () => {
         {renderArticle()}
 
         {/* 底部评论栏 */}
-        <CommentFooter detail={articleDetail} />
+        <CommentFooter
+          detail={articleDetail}
+          onCommentClick={() => {
+            const commentDOM = commentDomRef.current!;
+            const wrapDOM = wrapperDomRef.current!;
+            const rect = commentDOM.getBoundingClientRect();
+            wrapDOM.scrollTop = rect.top - 60;
+            // // 已在评论列表的位置，则跳到文章顶部
+            // if (wrapDOM.scrollTop === commentDOM.offsetTop - 45) {
+            //   wrapDOM.scrollTop = 0;
+            // }
+            // // 不在评论列表的位置，则跳到评论列表
+            // else {
+            //   wrapDOM.scrollTop = commentDOM.offsetTop - 45;
+            // }
+          }}
+        />
       </div>
     </div>
   );
