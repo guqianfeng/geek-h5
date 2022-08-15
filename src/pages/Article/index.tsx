@@ -10,6 +10,7 @@ import NoComment from "./components/NoComment";
 import { useDispatch, useSelector } from "react-redux";
 import { useMount } from "@/utils/hooks";
 import {
+  articlePublishComment,
   articleUserFollowingHandler,
   getArticleDetil,
   getComments,
@@ -190,8 +191,9 @@ const Article = () => {
           destroyOnClose
         >
           <CommentInput
-            onPublish={(value) => {
-              console.log(value);
+            onPublish={async (value) => {
+              await dispatch(articlePublishComment(id, value));
+              setShowPopup(false);
             }}
             onClose={() => {
               setShowPopup(false);

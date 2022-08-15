@@ -94,3 +94,29 @@ export const articleUserFollowingHandler = (
     dispatch(getArticleDetil(artId));
   };
 };
+
+/**
+ *
+ * @param target 目标id，评论文章是文章id，评论回复是评论id
+ * @param content 评论内容
+ * @param art_id 文章id，对评论内容发表回复需要传此参数，文章评论无需传此参数
+ * @returns
+ */
+export const articlePublishComment = (
+  target: string,
+  content: string,
+  art_id?: string
+): RootThunkAction => {
+  return async (dispatch) => {
+    await http.post(`/comments`, {
+      target,
+      content,
+      art_id,
+    });
+    dispatch({
+      type: "article/set_comments",
+      payload: {},
+    } as RootAction);
+    dispatch(getComments(art_id ? "c" : "a", art_id || target));
+  };
+};
