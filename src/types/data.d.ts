@@ -98,3 +98,22 @@ export interface ArticleDetail {
   read_count: number;
   like_count: number;
 }
+export interface CommentPage {
+  total_count: number;
+  end_id: string;
+  last_id: string;
+  results: Comment[];
+}
+
+export interface Comment {
+  com_id: string;
+  content: string;
+  reply_count: number;
+  pubdate: string;
+  is_followed: boolean;
+  is_liking: boolean;
+  like_count: number;
+  aut_id: string;
+  aut_name: string;
+  aut_photo: string;
+}

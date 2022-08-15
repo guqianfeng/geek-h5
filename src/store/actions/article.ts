@@ -1,4 +1,4 @@
-import { ApiResponse, ArticleDetail } from "@/types/data";
+import { ApiResponse, ArticleDetail, CommentPage } from "@/types/data";
 import { RootAction, RootThunkAction } from "@/types/store";
 import http from "@/utils/request";
 
@@ -10,5 +10,25 @@ export const getArticleDetil = (id: string): RootThunkAction => {
       type: "article/set_detail",
       payload: articleDetail,
     } as RootAction);
+  };
+};
+
+export const getComments = (
+  type: "a" | "c",
+  source: string,
+  offset?: string,
+  limit?: number
+): RootThunkAction => {
+  return async (dispatch) => {
+    const res = await http.get<ApiResponse<CommentPage>>("/comments", {
+      params: {
+        type,
+        source,
+        offset,
+        limit: limit || 10,
+      },
+    });
+    const commentPage = res.data.data;
+    console.log(commentPage);
   };
 };

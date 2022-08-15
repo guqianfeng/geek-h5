@@ -9,7 +9,7 @@ import history from "@/router";
 // http://geek.itheima.net
 // http://geek.itheima.net/v1_0/
 // http://toutiao.itheima.net/v1_0/
-const baseURL = "http://toutiao.itheima.net/v1_0/";
+const baseURL = "http://geek.itheima.net/v1_0/";
 const http = axios.create({
   baseURL,
   timeout: 5000,

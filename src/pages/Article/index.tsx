@@ -8,7 +8,7 @@ import CommentItem from "./components/CommentItem";
 import CommentFooter from "./components/CommentFooter";
 import { useDispatch, useSelector } from "react-redux";
 import { useMount } from "@/utils/hooks";
-import { getArticleDetil } from "@/store/actions/article";
+import { getArticleDetil, getComments } from "@/store/actions/article";
 import { RootState } from "@/types/store";
 import { ArticleDetail } from "@/types/data";
 import Dompurify from "dompurify";
@@ -22,6 +22,7 @@ const Article = () => {
 
   useMount(() => {
     dispatch(getArticleDetil(id));
+    dispatch(getComments("a", id));
     hljs.configure({ ignoreUnescapedHTML: true });
     document.querySelectorAll(".dg-html pre code").forEach((el) => {
       // console.log(el);
