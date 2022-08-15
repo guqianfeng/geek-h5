@@ -75,3 +75,22 @@ export const articleCollectedHandler = (
     dispatch(getArticleDetil(target));
   };
 };
+
+export const articleUserFollowingHandler = (
+  target: string,
+  followed: boolean,
+  artId: string
+): RootThunkAction => {
+  return async (dispatch) => {
+    if (followed) {
+      // 调用取消关注
+      await http.delete(`/user/followings/${target}`);
+    } else {
+      // 调用关注
+      await http.post("/user/followings", {
+        target,
+      });
+    }
+    dispatch(getArticleDetil(artId));
+  };
+};

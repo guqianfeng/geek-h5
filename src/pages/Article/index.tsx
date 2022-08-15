@@ -9,7 +9,11 @@ import CommentFooter from "./components/CommentFooter";
 import NoComment from "./components/NoComment";
 import { useDispatch, useSelector } from "react-redux";
 import { useMount } from "@/utils/hooks";
-import { getArticleDetil, getComments } from "@/store/actions/article";
+import {
+  articleUserFollowingHandler,
+  getArticleDetil,
+  getComments,
+} from "@/store/actions/article";
 import { RootState } from "@/types/store";
 import { ArticleDetail, CommentPage } from "@/types/data";
 import Dompurify from "dompurify";
@@ -20,6 +24,17 @@ const Article = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
+
+  const onFollowingHandler = () => {
+    console.log("处理关注逻辑");
+    dispatch(
+      articleUserFollowingHandler(
+        articleDetail.aut_id,
+        articleDetail.is_followed,
+        id
+      )
+    );
+  };
 
   useMount(() => {
     dispatch(getArticleDetil(id));
@@ -61,6 +76,7 @@ const Article = () => {
                 className={classNames("follow", {
                   followed: articleDetail.is_followed,
                 })}
+                onClick={onFollowingHandler}
               >
                 {articleDetail.is_followed ? "已关注" : "关注"}
               </span>
@@ -130,6 +146,7 @@ const Article = () => {
                 className={classNames("follow", {
                   followed: articleDetail.is_followed,
                 })}
+                onClick={onFollowingHandler}
               >
                 {articleDetail.is_followed ? "已关注" : "关注"}
               </span>
