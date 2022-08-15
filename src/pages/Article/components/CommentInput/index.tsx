@@ -1,14 +1,15 @@
-import styles from './index.module.scss'
-import { NavBar, TextArea } from 'antd-mobile'
+import styles from "./index.module.scss";
+import { NavBar, TextArea } from "antd-mobile";
 type Props = {
   // 评论的作者的名字
-  name?: string
-}
-export default function CommentInput({ name }: Props) {
+  name?: string;
+  onClose?: () => void;
+};
+export default function CommentInput({ name, onClose }: Props) {
   return (
     <div className={styles.root}>
-      <NavBar right={<span className="publish">发表</span>}>
-        {name ? '回复评论' : '评论文章'}
+      <NavBar right={<span className="publish">发表</span>} onBack={onClose}>
+        {name ? "回复评论" : "评论文章"}
       </NavBar>
       <div className="input-area">
         {/* 回复别人的评论时显示：@某某 */}
@@ -18,5 +19,5 @@ export default function CommentInput({ name }: Props) {
         <TextArea placeholder="说点什么~" rows={10} />
       </div>
     </div>
-  )
+  );
 }

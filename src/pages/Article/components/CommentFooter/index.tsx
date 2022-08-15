@@ -13,13 +13,19 @@ type Props = {
   // reply 回复评论
   type?: "normal" | "reply";
   onCommentClick?: () => void;
+  onShowInput?: () => void;
 };
 
-const CommentFooter = ({ type = "normal", detail, onCommentClick }: Props) => {
+const CommentFooter = ({
+  type = "normal",
+  detail,
+  onCommentClick,
+  onShowInput,
+}: Props) => {
   const dispatch = useDispatch();
   return (
     <div className={styles.root}>
-      <div className="input-btn">
+      <div className="input-btn" onClick={onShowInput}>
         <Icon type="iconbianji" />
         <span>抢沙发</span>
       </div>

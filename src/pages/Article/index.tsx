@@ -1,4 +1,4 @@
-import { NavBar, InfiniteScroll } from "antd-mobile";
+import { NavBar, InfiniteScroll, Popup } from "antd-mobile";
 import { useHistory, useParams } from "react-router-dom";
 import classNames from "classnames";
 import styles from "./index.module.scss";
@@ -19,7 +19,8 @@ import { ArticleDetail, CommentPage } from "@/types/data";
 import Dompurify from "dompurify";
 import hljs from "highlight.js";
 import "highlight.js/styles/base16/default-dark.css";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import CommentInput from "./components/CommentInput";
 
 const Article = () => {
   const history = useHistory();
@@ -58,6 +59,7 @@ const Article = () => {
   const wrapperDomRef = useRef<HTMLDivElement>(null);
   const commentDomRef = useRef<HTMLDivElement>(null);
 
+  const [showPopup, setShowPopup] = useState(false);
   const renderArticle = () => {
     // 文章详情
     return (
@@ -162,6 +164,9 @@ const Article = () => {
 
         {/* 底部评论栏 */}
         <CommentFooter
+          onShowInput={() => {
+            setShowPopup(true);
+          }}
           detail={articleDetail}
           onCommentClick={() => {
             const commentDOM = commentDomRef.current!;
@@ -178,6 +183,18 @@ const Article = () => {
             // }
           }}
         />
+        <Popup
+          visible={showPopup}
+          bodyStyle={{ height: "100vh" }}
+          position={"right"}
+          destroyOnClose
+        >
+          <CommentInput
+            onClose={() => {
+              setShowPopup(false);
+            }}
+          ></CommentInput>
+        </Popup>
       </div>
     </div>
   );
