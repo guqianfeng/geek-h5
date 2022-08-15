@@ -34,7 +34,7 @@ export const getComments = (
       type: "article/set_comments",
       payload: {
         ...commentPage,
-        results: [...commentPage.results, ...(oldCommentPage.results || [])],
+        results: [...(oldCommentPage.results || []), ...commentPage.results],
       },
     } as RootAction);
   };

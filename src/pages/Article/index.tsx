@@ -6,11 +6,12 @@ import styles from "./index.module.scss";
 import Icon from "@/components/Icon";
 import CommentItem from "./components/CommentItem";
 import CommentFooter from "./components/CommentFooter";
+import NoComment from "./components/NoComment";
 import { useDispatch, useSelector } from "react-redux";
 import { useMount } from "@/utils/hooks";
 import { getArticleDetil, getComments } from "@/store/actions/article";
 import { RootState } from "@/types/store";
-import { ArticleDetail } from "@/types/data";
+import { ArticleDetail, CommentPage } from "@/types/data";
 import Dompurify from "dompurify";
 import hljs from "highlight.js";
 import "highlight.js/styles/base16/default-dark.css";
@@ -32,6 +33,10 @@ const Article = () => {
 
   const articleDetail = useSelector<RootState, ArticleDetail>(
     (state) => state.article.articleDetail
+  );
+
+  const commentPage = useSelector<RootState, CommentPage>(
+    (state) => state.article.commentPage
   );
 
   const renderArticle = () => {
@@ -84,14 +89,21 @@ const Article = () => {
           </div>
 
           <div className="comment-list">
-            <CommentItem />
-
-            <InfiniteScroll
-              hasMore={false}
-              loadMore={async () => {
-                console.log(1);
-              }}
-            />
+            {commentPage?.results?.length > 0 ? (
+              <>
+                {commentPage.results.map((item) => (
+                  <CommentItem key={item.com_id} comment={item} />
+                ))}
+                <InfiniteScroll
+                  hasMore={commentPage.last_id !== commentPage.end_id}
+                  loadMore={async () => {
+                    await dispatch(getComments("a", id, commentPage.last_id));
+                  }}
+                />
+              </>
+            ) : (
+              <NoComment></NoComment>
+            )}
           </div>
         </div>
       </div>
