@@ -11,6 +11,7 @@ import { useMount } from "@/utils/hooks";
 import { getArticleDetil } from "@/store/actions/article";
 import { RootState } from "@/types/store";
 import { ArticleDetail } from "@/types/data";
+import Dompurify from "dompurify";
 
 const Article = () => {
   const history = useHistory();
@@ -57,7 +58,11 @@ const Article = () => {
             <div
               className="content-html dg-html"
               dangerouslySetInnerHTML={{
-                __html: articleDetail.content,
+                __html: Dompurify.sanitize(
+                  articleDetail.content +
+                    '<script>console.log("我是天才攻击你丫的")</script>'
+                ),
+                // __html: articleDetail.content,
               }}
             />
             <div className="date">发布文章时间：{articleDetail.pubdate}</div>
