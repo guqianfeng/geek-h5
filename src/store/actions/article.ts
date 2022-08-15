@@ -19,7 +19,7 @@ export const getComments = (
   offset?: string,
   limit?: number
 ): RootThunkAction => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     const res = await http.get<ApiResponse<CommentPage>>("/comments", {
       params: {
         type,
@@ -28,7 +28,14 @@ export const getComments = (
         limit: limit || 10,
       },
     });
+    const oldCommentPage = getState().article.commentPage;
     const commentPage = res.data.data;
-    console.log(commentPage);
+    dispatch({
+      type: "article/set_comments",
+      payload: {
+        ...commentPage,
+        results: [...commentPage.results, ...(oldCommentPage.results || [])],
+      },
+    } as RootAction);
   };
 };

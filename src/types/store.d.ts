@@ -8,6 +8,7 @@ import {
   History,
   SearchResult,
   ArticleDetail,
+  CommentPage,
 } from "./data.d";
 import store from "@/store";
 import { ThunkAction } from "redux-thunk";
@@ -70,6 +71,11 @@ export type ArticleSetDetailAction = {
   payload: ArticleDetail;
 };
 
+export type ArticleSetCommentsAction = {
+  type: "article/set_comments";
+  payload: CommentPage;
+};
+
 // 所有 Action 汇总成的类型
 export type RootAction =
   | LoginSetTokenAction
@@ -82,7 +88,8 @@ export type RootAction =
   | SearchSetSuggestionAction
   | SearchSetHistoryAction
   | SearchSetSearchResultAction
-  | ArticleSetDetailAction;
+  | ArticleSetDetailAction
+  | ArticleSetCommentsAction;
 
 export type RootState = ReturnType<typeof store.getState>;
 
