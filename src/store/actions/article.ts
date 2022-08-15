@@ -136,6 +136,9 @@ export function getReplyList(id: string, offset: string): RootThunkAction {
       },
     });
 
-    console.log(res.data.data);
+    dispatch({
+      type: "article/set_replys",
+      payload: res.data.data,
+    } as RootAction);
   };
 }

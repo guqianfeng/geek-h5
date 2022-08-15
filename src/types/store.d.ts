@@ -76,6 +76,11 @@ export type ArticleSetCommentsAction = {
   payload: CommentPage;
 };
 
+export type ArticleSetReplysAction = {
+  type: "article/set_replys";
+  payload: CommentPage;
+};
+
 // 所有 Action 汇总成的类型
 export type RootAction =
   | LoginSetTokenAction
@@ -89,7 +94,8 @@ export type RootAction =
   | SearchSetHistoryAction
   | SearchSetSearchResultAction
   | ArticleSetDetailAction
-  | ArticleSetCommentsAction;
+  | ArticleSetCommentsAction
+  | ArticleSetReplysAction;
 
 export type RootState = ReturnType<typeof store.getState>;
 
