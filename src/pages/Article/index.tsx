@@ -6,9 +6,11 @@ import styles from "./index.module.scss";
 import Icon from "@/components/Icon";
 import CommentItem from "./components/CommentItem";
 import CommentFooter from "./components/CommentFooter";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useMount } from "@/utils/hooks";
 import { getArticleDetil } from "@/store/actions/article";
+import { RootState } from "@/types/store";
+import { ArticleDetail } from "@/types/data";
 
 const Article = () => {
   const history = useHistory();
@@ -19,39 +21,53 @@ const Article = () => {
     dispatch(getArticleDetil(id));
   });
 
+  const articleDetail = useSelector<RootState, ArticleDetail>(
+    (state) => state.article.articleDetail
+  );
+
   const renderArticle = () => {
     // 文章详情
     return (
       <div className="wrapper">
         <div className="article-wrapper">
           <div className="header">
-            <h1 className="title">ES6 Promise 和 Async/await的使用</h1>
+            <h1 className="title">{articleDetail.title}</h1>
 
             <div className="info">
-              <span>2019-03-11</span>
-              <span>202 阅读</span>
-              <span>10 评论</span>
+              <span>{articleDetail.pubdate}</span>
+              <span>{articleDetail.read_count} 阅读</span>
+              <span>{articleDetail.comm_count} 评论</span>
             </div>
 
             <div className="author">
-              <img src="http://geek.itheima.net/images/user_head.jpg" alt="" />
-              <span className="name">黑马先锋</span>
-              <span className={classNames("follow", true ? "followed" : "")}>
-                {true ? "已关注" : "关注"}
+              <img src={articleDetail.aut_photo} alt="" />
+              <span className="name">{articleDetail.aut_name}</span>
+              {/* followed标记是否已关注 */}
+              <span
+                className={classNames("follow", {
+                  followed: articleDetail.is_followed,
+                })}
+              >
+                {articleDetail.is_followed ? "已关注" : "关注"}
               </span>
             </div>
           </div>
 
           <div className="content">
-            <div className="content-html dg-html" />
-            <div className="date">发布文章时间：2021-2-1</div>
+            <div
+              className="content-html dg-html"
+              dangerouslySetInnerHTML={{
+                __html: articleDetail.content,
+              }}
+            />
+            <div className="date">发布文章时间：{articleDetail.pubdate}</div>
           </div>
         </div>
 
         <div className="comment">
           <div className="comment-header">
-            <span>全部评论（10）</span>
-            <span>20 点赞</span>
+            <span>全部评论（{articleDetail.comm_count}）</span>
+            <span>{articleDetail.like_count} 点赞</span>
           </div>
 
           <div className="comment-list">
@@ -82,10 +98,15 @@ const Article = () => {
         >
           {true && (
             <div className="nav-author">
-              <img src="http://geek.itheima.net/images/user_head.jpg" alt="" />
-              <span className="name">黑马先锋</span>
-              <span className={classNames("follow", true ? "followed" : "")}>
-                {true ? "已关注" : "关注"}
+              <img src={articleDetail.aut_photo} alt="" />
+              <span className="name">{articleDetail.aut_name}</span>
+              {/* followed */}
+              <span
+                className={classNames("follow", {
+                  followed: articleDetail.is_followed,
+                })}
+              >
+                {articleDetail.is_followed ? "已关注" : "关注"}
               </span>
             </div>
           )}
