@@ -16,12 +16,13 @@ import {
   getComments,
 } from "@/store/actions/article";
 import { RootState } from "@/types/store";
-import { ArticleDetail, CommentPage } from "@/types/data";
+import { ArticleDetail, Comment, CommentPage } from "@/types/data";
 import Dompurify from "dompurify";
 import hljs from "highlight.js";
 import "highlight.js/styles/base16/default-dark.css";
 import { useRef, useState } from "react";
 import CommentInput from "./components/CommentInput";
+import CommentReply from "./components/CommentReply";
 
 const Article = () => {
   const history = useHistory();
@@ -61,6 +62,10 @@ const Article = () => {
   const commentDomRef = useRef<HTMLDivElement>(null);
 
   const [showPopup, setShowPopup] = useState(false);
+  const [showReply, setShowReply] = useState(false);
+  const [replyOrigincomment, setReplyOriginComment] = useState<Comment>(
+    {} as Comment
+  );
   const renderArticle = () => {
     // 文章详情
     return (
@@ -115,7 +120,14 @@ const Article = () => {
             {commentPage?.results?.length > 0 ? (
               <>
                 {commentPage.results.map((item) => (
-                  <CommentItem key={item.com_id} comment={item} />
+                  <CommentItem
+                    onShowReply={() => {
+                      setShowReply(true);
+                      setReplyOriginComment(item);
+                    }}
+                    key={item.com_id}
+                    comment={item}
+                  />
                 ))}
                 <InfiniteScroll
                   hasMore={commentPage.last_id !== commentPage.end_id}
@@ -199,6 +211,20 @@ const Article = () => {
               setShowPopup(false);
             }}
           ></CommentInput>
+        </Popup>
+        <Popup
+          visible={showReply}
+          bodyStyle={{ height: "100vh" }}
+          position={"right"}
+          destroyOnClose
+        >
+          <CommentReply
+            comment={replyOrigincomment}
+            onClose={() => {
+              setShowReply(false);
+              setReplyOriginComment({} as Comment);
+            }}
+          ></CommentReply>
         </Popup>
       </div>
     </div>

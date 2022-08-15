@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import styles from "./index.module.scss";
 
 type Props = {
-  detail: ArticleDetail;
+  detail?: ArticleDetail;
   // normal 普通评论
   // reply 回复评论
   type?: "normal" | "reply";
@@ -35,19 +35,20 @@ const CommentFooter = ({
           <div className="action-item" onClick={onCommentClick}>
             <Icon type="iconbtn_comment" />
             <p>评论</p>
-            {!!detail.comm_count && (
+            {!!detail?.comm_count && (
               <span className="bage">{detail.comm_count}</span>
             )}
           </div>
           <div
             className="action-item"
             onClick={() => {
-              dispatch(articleLikingHandler(detail.art_id, detail.attitude));
+              detail &&
+                dispatch(articleLikingHandler(detail.art_id, detail.attitude));
             }}
           >
             <Icon
               type={
-                detail.attitude === 1 ? "iconbtn_like_sel" : "iconbtn_like2"
+                detail?.attitude === 1 ? "iconbtn_like_sel" : "iconbtn_like2"
               }
             />
             <p>点赞</p>
@@ -56,13 +57,14 @@ const CommentFooter = ({
             className="action-item"
             onClick={() => {
               dispatch(
-                articleCollectedHandler(detail.art_id, detail.is_collected)
+                detail &&
+                  articleCollectedHandler(detail.art_id, detail.is_collected)
               );
             }}
           >
             <Icon
               type={
-                detail.is_collected ? "iconbtn_collect_sel" : "iconbtn_collect"
+                detail?.is_collected ? "iconbtn_collect_sel" : "iconbtn_collect"
               }
             />
             <p>收藏</p>
@@ -73,7 +75,7 @@ const CommentFooter = ({
       {type === "reply" && (
         <div className="action-item">
           <Icon
-            type={detail.attitude === 1 ? "iconbtn_like_sel" : "iconbtn_like2"}
+            type={detail?.attitude === 1 ? "iconbtn_like_sel" : "iconbtn_like2"}
           />
           <p>点赞</p>
         </div>

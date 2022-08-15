@@ -7,25 +7,27 @@ import styles from "./index.module.scss";
 import { Comment } from "@/types/data";
 
 type Props = {
+  comment: Comment;
   // normal 普通 - 文章的评论
   // origin 回复评论的原始评论，也就是对哪个评论进行回复
   // reply 回复评论
   type?: "normal" | "reply" | "origin";
-  comment: Comment;
+  onShowReply?: () => void;
 };
 
 const CommentItem = ({
+  comment,
   // normal 普通
   // origin 回复评论的原始评论
   // reply 回复评论
   type = "normal",
-  comment,
+  onShowReply,
 }: Props) => {
   // 回复按钮
   const replyJSX =
     type === "normal" ? (
-      <span className="replay">
-        0 回复
+      <span className="replay" onClick={onShowReply}>
+        {comment.reply_count} 回复
         <Icon type="iconbtn_right" />
       </span>
     ) : null;
@@ -37,7 +39,7 @@ const CommentItem = ({
       </div>
       <div className="comment-info">
         <div className="comment-info-header">
-          <span className="name">黑马先锋</span>
+          <span className="name">{comment.aut_name}</span>
           {/* 文章评论、评论的回复 */}
           {(type === "normal" || type === "reply") && (
             <span className="thumbs-up">
