@@ -12,6 +12,8 @@ import { getArticleDetil } from "@/store/actions/article";
 import { RootState } from "@/types/store";
 import { ArticleDetail } from "@/types/data";
 import Dompurify from "dompurify";
+import hljs from "highlight.js";
+import "highlight.js/styles/base16/default-dark.css";
 
 const Article = () => {
   const history = useHistory();
@@ -20,6 +22,11 @@ const Article = () => {
 
   useMount(() => {
     dispatch(getArticleDetil(id));
+    hljs.configure({ ignoreUnescapedHTML: true });
+    document.querySelectorAll(".dg-html pre code").forEach((el) => {
+      // console.log(el);
+      hljs.highlightElement(el as HTMLElement);
+    });
   });
 
   const articleDetail = useSelector<RootState, ArticleDetail>(
