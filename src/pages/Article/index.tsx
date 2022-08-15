@@ -190,6 +190,9 @@ const Article = () => {
           destroyOnClose
         >
           <CommentInput
+            onPublish={(value) => {
+              console.log(value);
+            }}
             onClose={() => {
               setShowPopup(false);
             }}
