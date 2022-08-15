@@ -83,3 +83,18 @@ export interface SearchItem {
   like_count: number;
   collect_count: number;
 }
+export interface ArticleDetail {
+  art_id: string;
+  title: string;
+  pubdate: string;
+  aut_id: string;
+  content: string;
+  aut_name: string;
+  aut_photo: string;
+  is_followed: boolean;
+  is_collected: boolean;
+  attitude: number;
+  comm_count: number;
+  read_count: number;
+  like_count: number;
+}

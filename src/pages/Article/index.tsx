@@ -1,14 +1,23 @@
-import { NavBar, InfiniteScroll } from 'antd-mobile'
-import { useHistory } from 'react-router-dom'
-import classNames from 'classnames'
-import styles from './index.module.scss'
+import { NavBar, InfiniteScroll } from "antd-mobile";
+import { useHistory, useParams } from "react-router-dom";
+import classNames from "classnames";
+import styles from "./index.module.scss";
 
-import Icon from '@/components/Icon'
-import CommentItem from './components/CommentItem'
-import CommentFooter from './components/CommentFooter'
+import Icon from "@/components/Icon";
+import CommentItem from "./components/CommentItem";
+import CommentFooter from "./components/CommentFooter";
+import { useDispatch } from "react-redux";
+import { useMount } from "@/utils/hooks";
+import { getArticleDetil } from "@/store/actions/article";
 
 const Article = () => {
-  const history = useHistory()
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { id } = useParams<{ id: string }>();
+
+  useMount(() => {
+    dispatch(getArticleDetil(id));
+  });
 
   const renderArticle = () => {
     // 文章详情
@@ -27,8 +36,8 @@ const Article = () => {
             <div className="author">
               <img src="http://geek.itheima.net/images/user_head.jpg" alt="" />
               <span className="name">黑马先锋</span>
-              <span className={classNames('follow', true ? 'followed' : '')}>
-                {true ? '已关注' : '关注'}
+              <span className={classNames("follow", true ? "followed" : "")}>
+                {true ? "已关注" : "关注"}
               </span>
             </div>
           </div>
@@ -51,14 +60,14 @@ const Article = () => {
             <InfiniteScroll
               hasMore={false}
               loadMore={async () => {
-                console.log(1)
+                console.log(1);
               }}
             />
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className={styles.root}>
@@ -75,8 +84,8 @@ const Article = () => {
             <div className="nav-author">
               <img src="http://geek.itheima.net/images/user_head.jpg" alt="" />
               <span className="name">黑马先锋</span>
-              <span className={classNames('follow', true ? 'followed' : '')}>
-                {true ? '已关注' : '关注'}
+              <span className={classNames("follow", true ? "followed" : "")}>
+                {true ? "已关注" : "关注"}
               </span>
             </div>
           )}
@@ -88,7 +97,7 @@ const Article = () => {
         <CommentFooter />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Article
+export default Article;
