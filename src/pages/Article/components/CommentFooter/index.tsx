@@ -1,13 +1,15 @@
-import Icon from '@/components/Icon'
-import styles from './index.module.scss'
+import Icon from "@/components/Icon";
+import { ArticleDetail } from "@/types/data";
+import styles from "./index.module.scss";
 
 type Props = {
   // normal 普通评论
   // reply 回复评论
-  type?: 'normal' | 'reply'
-}
+  type?: "normal" | "reply";
+  detail: ArticleDetail;
+};
 
-const CommentFooter = ({ type = 'normal' }: Props) => {
+const CommentFooter = ({ type = "normal", detail }: Props) => {
   return (
     <div className={styles.root}>
       <div className="input-btn">
@@ -15,27 +17,39 @@ const CommentFooter = ({ type = 'normal' }: Props) => {
         <span>抢沙发</span>
       </div>
 
-      {type === 'normal' && (
+      {type === "normal" && (
         <>
           <div className="action-item">
             <Icon type="iconbtn_comment" />
             <p>评论</p>
-            {!!1 && <span className="bage">{1}</span>}
+            {!!detail.comm_count && (
+              <span className="bage">{detail.comm_count}</span>
+            )}
           </div>
           <div className="action-item">
-            <Icon type={true ? 'iconbtn_like_sel' : 'iconbtn_like2'} />
+            <Icon
+              type={
+                detail.attitude === 1 ? "iconbtn_like_sel" : "iconbtn_like2"
+              }
+            />
             <p>点赞</p>
           </div>
           <div className="action-item">
-            <Icon type={true ? 'iconbtn_collect_sel' : 'iconbtn_collect'} />
+            <Icon
+              type={
+                detail.is_collected ? "iconbtn_collect_sel" : "iconbtn_collect"
+              }
+            />
             <p>收藏</p>
           </div>
         </>
       )}
 
-      {type === 'reply' && (
+      {type === "reply" && (
         <div className="action-item">
-          <Icon type={true ? 'iconbtn_like_sel' : 'iconbtn_like2'} />
+          <Icon
+            type={detail.attitude === 1 ? "iconbtn_like_sel" : "iconbtn_like2"}
+          />
           <p>点赞</p>
         </div>
       )}
@@ -45,7 +59,7 @@ const CommentFooter = ({ type = 'normal' }: Props) => {
         <p>分享</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CommentFooter
+export default CommentFooter;
