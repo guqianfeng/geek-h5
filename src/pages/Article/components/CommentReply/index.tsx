@@ -1,8 +1,9 @@
 import { getReplyList } from "@/store/actions/article";
-import { Comment } from "@/types/data";
+import { Comment, CommentPage } from "@/types/data";
+import { RootState } from "@/types/store";
 import { useMount } from "@/utils/hooks";
 import { NavBar } from "antd-mobile";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CommentFooter from "../CommentFooter";
 import CommentItem from "../CommentItem";
 import NoComment from "../NoComment";
@@ -13,6 +14,9 @@ type CommentReplyProps = {
 };
 export default function CommentReply({ onClose, comment }: CommentReplyProps) {
   const dispatch = useDispatch();
+  const replyPage = useSelector<RootState, CommentPage>(
+    (state) => state.article.replyPage
+  );
   useMount(() => {
     dispatch(getReplyList(comment.com_id, ""));
   });
@@ -32,8 +36,17 @@ export default function CommentReply({ onClose, comment }: CommentReplyProps) {
         {/* 回复评论的列表 */}
         <div className="reply-list">
           <div className="reply-header">全部回复</div>
-
-          <NoComment />
+          {replyPage?.results?.length ? (
+            replyPage.results.map((item) => (
+              <CommentItem
+                type="reply"
+                key={item.com_id}
+                comment={item}
+              ></CommentItem>
+            ))
+          ) : (
+            <NoComment />
+          )}
         </div>
 
         {/* 评论工具栏，设置 type="reply" 不显示评论和点赞按钮 */}
