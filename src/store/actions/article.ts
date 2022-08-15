@@ -32,10 +32,15 @@ export const getComments = (
     const commentPage = res.data.data;
     dispatch({
       type: "article/set_comments",
-      payload: {
-        ...commentPage,
-        results: [...(oldCommentPage.results || []), ...commentPage.results],
-      },
+      payload: offset
+        ? {
+            ...commentPage,
+            results: [
+              ...(oldCommentPage.results || []),
+              ...commentPage.results,
+            ],
+          }
+        : commentPage,
     } as RootAction);
   };
 };
