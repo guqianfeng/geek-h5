@@ -125,3 +125,17 @@ export const articlePublishComment = (
     dispatch(getComments(art_id ? "c" : "a", art_id || target));
   };
 };
+
+export function getReplyList(id: string, offset: string): RootThunkAction {
+  return async (dispatch) => {
+    const res = await http.get<ApiResponse<CommentPage>>("/comments", {
+      params: {
+        type: "c",
+        source: id,
+        offset,
+      },
+    });
+
+    console.log(res.data.data);
+  };
+}

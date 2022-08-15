@@ -1,5 +1,8 @@
+import { getReplyList } from "@/store/actions/article";
 import { Comment } from "@/types/data";
+import { useMount } from "@/utils/hooks";
 import { NavBar } from "antd-mobile";
+import { useDispatch } from "react-redux";
 import CommentFooter from "../CommentFooter";
 import CommentItem from "../CommentItem";
 import NoComment from "../NoComment";
@@ -9,6 +12,10 @@ type CommentReplyProps = {
   onClose?: () => void;
 };
 export default function CommentReply({ onClose, comment }: CommentReplyProps) {
+  const dispatch = useDispatch();
+  useMount(() => {
+    dispatch(getReplyList(comment.com_id, ""));
+  });
   return (
     <div className={styles.root}>
       <div className="reply-wrapper">
