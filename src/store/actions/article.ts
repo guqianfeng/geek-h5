@@ -57,3 +57,21 @@ export const articleLikingHandler = (
     dispatch(getArticleDetil(target));
   };
 };
+
+export const articleCollectedHandler = (
+  target: string,
+  collected: boolean
+): RootThunkAction => {
+  return async (dispatch) => {
+    if (collected) {
+      // 已收藏 调用取消收藏接口
+      await http.delete(`/article/collections/${target}`);
+    } else {
+      // 未收藏 调用收藏接口
+      await http.post(`/article/collections`, {
+        target,
+      });
+    }
+    dispatch(getArticleDetil(target));
+  };
+};

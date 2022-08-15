@@ -1,5 +1,8 @@
 import Icon from "@/components/Icon";
-import { articleLikingHandler } from "@/store/actions/article";
+import {
+  articleCollectedHandler,
+  articleLikingHandler,
+} from "@/store/actions/article";
 import { ArticleDetail } from "@/types/data";
 import { useDispatch } from "react-redux";
 import styles from "./index.module.scss";
@@ -42,7 +45,14 @@ const CommentFooter = ({ type = "normal", detail }: Props) => {
             />
             <p>点赞</p>
           </div>
-          <div className="action-item">
+          <div
+            className="action-item"
+            onClick={() => {
+              dispatch(
+                articleCollectedHandler(detail.art_id, detail.is_collected)
+              );
+            }}
+          >
             <Icon
               type={
                 detail.is_collected ? "iconbtn_collect_sel" : "iconbtn_collect"
