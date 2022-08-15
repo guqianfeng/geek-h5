@@ -39,3 +39,21 @@ export const getComments = (
     } as RootAction);
   };
 };
+
+export const articleLikingHandler = (
+  target: string,
+  attitude: number
+): RootThunkAction => {
+  return async (dispatch) => {
+    if (attitude === 1) {
+      // 取消点赞
+      await http.delete(`/article/likings/${target}`);
+    } else {
+      // 点赞
+      await http.post(`/article/likings`, {
+        target,
+      });
+    }
+    dispatch(getArticleDetil(target));
+  };
+};

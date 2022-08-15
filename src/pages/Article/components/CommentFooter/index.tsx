@@ -1,5 +1,7 @@
 import Icon from "@/components/Icon";
+import { articleLikingHandler } from "@/store/actions/article";
 import { ArticleDetail } from "@/types/data";
+import { useDispatch } from "react-redux";
 import styles from "./index.module.scss";
 
 type Props = {
@@ -10,6 +12,7 @@ type Props = {
 };
 
 const CommentFooter = ({ type = "normal", detail }: Props) => {
+  const dispatch = useDispatch();
   return (
     <div className={styles.root}>
       <div className="input-btn">
@@ -26,7 +29,12 @@ const CommentFooter = ({ type = "normal", detail }: Props) => {
               <span className="bage">{detail.comm_count}</span>
             )}
           </div>
-          <div className="action-item">
+          <div
+            className="action-item"
+            onClick={() => {
+              dispatch(articleLikingHandler(detail.art_id, detail.attitude));
+            }}
+          >
             <Icon
               type={
                 detail.attitude === 1 ? "iconbtn_like_sel" : "iconbtn_like2"
