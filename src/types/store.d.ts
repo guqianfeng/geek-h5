@@ -7,6 +7,7 @@ import {
   Suggestion,
   History,
   SearchResult,
+  ArticleDetail,
 } from "./data.d";
 import store from "@/store";
 import { ThunkAction } from "redux-thunk";
@@ -59,9 +60,14 @@ export type SearchSetHistoryAction = {
   payload: History;
 };
 
-export type SearchSetSearchResult = {
+export type SearchSetSearchResultAction = {
   type: "search/set_search_result";
   payload: SearchResult;
+};
+
+export type ArticleSetDetailAction = {
+  type: "article/set_detail";
+  payload: ArticleDetail;
 };
 
 // 所有 Action 汇总成的类型
@@ -75,7 +81,8 @@ export type RootAction =
   | HomeSetChannelArticleAction
   | SearchSetSuggestionAction
   | SearchSetHistoryAction
-  | SearchSetSearchResult;
+  | SearchSetSearchResultAction
+  | ArticleSetDetailAction;
 
 export type RootState = ReturnType<typeof store.getState>;
 
