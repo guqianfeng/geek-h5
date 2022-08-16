@@ -10,12 +10,17 @@ import AuthRoute from "./components/auth-route";
 import SearchPage from "./pages/Search";
 import Result from "./pages/Search/Result";
 import Article from "./pages/Article";
+import KeepAlive from "./components/keep-alive";
 
 const Chat = lazy(() => import("@/pages/Chat"));
+
+// const TestDiv = () => <div>test - div</div>;
 
 export default function App() {
   return (
     <div className="app">
+      {/* <KeepAlive path={"/abc"} component={TestDiv}></KeepAlive> */}
+      <KeepAlive path={"/home"} component={Layout}></KeepAlive>
       <Suspense fallback={<span>界面正在加载中....</span>}>
         <Switch>
           {/* <Route path="/" exact> */}
@@ -28,7 +33,7 @@ export default function App() {
               return <Redirect to={"/home"}></Redirect>;
             }}
           ></Route>
-          <Route path={"/home"} component={Layout}></Route>
+          {/* <Route path={"/home"} component={Layout}></Route> */}
           <Route path={"/login"} component={Login}></Route>
           <Route path={"/playground"} component={Playground}></Route>
           {/* <Route path="/profile/edit" component={ProfileEdit}></Route> */}

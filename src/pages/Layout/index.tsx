@@ -7,6 +7,7 @@ import Question from "./Question";
 import Video from "./Video";
 import Profile from "./Profile";
 import AuthRoute from "@/components/auth-route";
+import KeepAlive from "@/components/keep-alive";
 // 标签页数据
 const tabs = [
   { path: "/home", icon: "iconbtn_home", text: "首页" },
@@ -43,11 +44,12 @@ const Layout = () => {
           />
         ))}
       </TabBar>
+      <KeepAlive path="/home" exact component={Home}></KeepAlive>
       <Switch>
         {/* 需要精确匹配 */}
-        <Route path="/home" exact>
+        {/* <Route path="/home" exact>
           <Home />
-        </Route>
+        </Route> */}
 
         <Route path="/home/question">
           <Question />
