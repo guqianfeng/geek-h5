@@ -32,7 +32,7 @@ export default function Login() {
       content: "登录成功",
       duration: 1000,
       afterClose: () => {
-        const redirectURL = location.state.redirectURL;
+        const redirectURL = location?.state?.redirectURL;
         history.push(redirectURL || "/home");
       },
     });
