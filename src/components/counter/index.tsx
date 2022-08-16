@@ -1,18 +1,18 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 
-export default class Counter extends Component {
+export default class Counter extends PureComponent {
   state = {
     count: 0,
   };
   clickHandler = () => {
     this.setState({
-      count: this.state.count + 1,
-      // count: 0,
+      // count: this.state.count + 1,
+      count: 0,
     });
   };
-  shouldComponentUpdate(nextProps: any, nextState: any) {
-    return this.state.count !== nextState.count;
-  }
+  // shouldComponentUpdate(nextProps: any, nextState: any) {
+  //   return this.state.count !== nextState.count;
+  // }
   render() {
     console.log(">>>>>>>>>>>", this.state.count);
     return (
