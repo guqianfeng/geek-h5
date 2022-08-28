@@ -20,7 +20,7 @@ import { ArticleDetail, Comment, CommentPage } from "@/types/data";
 import Dompurify from "dompurify";
 import hljs from "highlight.js";
 import "highlight.js/styles/base16/default-dark.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CommentInput from "./components/CommentInput";
 import CommentReply from "./components/CommentReply";
 
@@ -66,6 +66,25 @@ const Article = () => {
   const [replyOrigincomment, setReplyOriginComment] = useState<Comment>(
     {} as Comment
   );
+  const [showAuthor, setShowAuthor] = useState(false);
+  const authorRef = useRef<HTMLDivElement>(null);
+  // const wrapRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const wrapDOM = wrapperDomRef.current!;
+    const authDOM = authorRef.current!;
+
+    const onScroll = function () {
+      const rect = authDOM.getBoundingClientRect()!;
+      console.log(rect.top);
+      setShowAuthor(rect.top <= 0);
+    };
+
+    wrapDOM.addEventListener("scroll", onScroll);
+
+    return () => {
+      wrapDOM.removeEventListener("scroll", onScroll);
+    };
+  }, []);
   const renderArticle = () => {
     // 文章详情
     return (
@@ -80,7 +99,7 @@ const Article = () => {
               <span>{articleDetail.comm_count} 评论</span>
             </div>
 
-            <div className="author">
+            <div className="author" ref={authorRef}>
               <img src={articleDetail.aut_photo} alt="" />
               <span className="name">{articleDetail.aut_name}</span>
               {/* followed标记是否已关注 */}
@@ -156,7 +175,7 @@ const Article = () => {
             </span>
           }
         >
-          {true && (
+          {showAuthor && (
             <div className="nav-author">
               <img src={articleDetail.aut_photo} alt="" />
               <span className="name">{articleDetail.aut_name}</span>
